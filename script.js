@@ -241,70 +241,140 @@ function withThemeFade(fn){
 }
 
 
-// === Reliable observers v2 ===
-// Helper to check if element is in viewport
-function inViewport(el){
-  const r = el.getBoundingClientRect();
-  return r.top < (window.innerHeight * 0.9) && r.bottom > 0;
-}
-
-// Counters (About stats)
+// === Active section nav highlight ===
 (function(){
-  const counters = document.querySelectorAll('.stat span');
-  if(!counters.length) return;
-  function animateCounter(el){ 
-    const target = +el.dataset.count || +el.textContent || 0; 
-    if(!target){ return; }
-    let n = 0; const step = Math.max(1, Math.floor(target/40));
-    const t=()=>{ n += step; if(n >= target) n = target; el.textContent = String(n); if(n < target) requestAnimationFrame(t); };
-    t();
+  const sections = ['home','about','work','projects','impact','experience','contact','connect'];
+  const links = Array.from(document.querySelectorAll('.links a'));
+  function update(){
+    let current = 'home';
+    const scrollY = window.scrollY + 120; // offset for sticky nav
+    sections.forEach(id=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      const top = el.offsetTop;
+      if(scrollY >= top) current = id;
+    });
+    links.forEach(a=>{
+      const href = a.getAttribute('href')||'';
+      const id = href.startsWith('#') ? href.slice(1) : '';
+      const isActive = id === current;
+      a.classList.toggle('active', isActive);
+      a.setAttribute('aria-current', isActive ? 'page' : 'false');
+    });
   }
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ animateCounter(e.target); io.unobserve(e.target); } });
-  }, { threshold: .35, rootMargin: "0px 0px -10% 0px" });
-  counters.forEach(c=>{
-    // Ensure data-count is present from parent .stat
-    if(!c.dataset.count && c.parentElement?.dataset.count){
-      c.dataset.count = c.parentElement.dataset.count;
-    }
-    if(inViewport(c)) animateCounter(c); else io.observe(c);
+  window.addEventListener('scroll', update, {passive:true});
+  window.addEventListener('load', update);
+})();
+
+// === Keyboard shortcuts ===
+// t: theme toggle, m: mobile menu, g: go top, c: contact, ?: help
+(function(){
+  function isTyping(){ return ['INPUT','TEXTAREA'].includes(document.activeElement?.tagName); }
+  document.addEventListener('keydown', (e)=>{
+    if(isTyping() || e.metaKey || e.ctrlKey || e.altKey) return;
+    if(e.key === 't'){ e.preventDefault(); document.getElementById('theme-toggle')?.click(); }
+    if(e.key === 'm'){ e.preventDefault(); document.getElementById('menu-toggle')?.click(); }
+    if(e.key === 'g'){ e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}); }
+    if(e.key.toLowerCase() === 'c'){ e.preventDefault(); document.getElementById('contact')?.scrollIntoView({behavior:'smooth'}); }
+    if(e.key === '?'){ e.preventDefault(); toast('Shortcuts — t: theme • m: menu • g: top • c: contact'); }
   });
 })();
 
-// Impact meters (circle % + count)
+// === Command Palette ===
 (function(){
-  const meters = document.querySelectorAll('.meter:not(.count)');
-  function sweepMeter(el){
-    const pct = Math.max(0, Math.min(100, parseInt(el.dataset.percent||'0',10)));
-    let cur = 0;
-    const sweep = ()=>{
-      cur += Math.max(1, Math.ceil(pct/40));
-      if(cur > pct) cur = pct;
-      el.style.background = `conic-gradient(var(--brand) ${3.6*cur}deg, var(--line) 0deg)`;
-      if(cur < pct) requestAnimationFrame(sweep);
-    };
-    sweep();
-  }
-  const ioM = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ sweepMeter(e.target); ioM.unobserve(e.target);} });
-  }, { threshold: .25, rootMargin: "0px 0px -10% 0px" });
-  meters.forEach(m=>{ if(inViewport(m)) sweepMeter(m); else ioM.observe(m); });
+  const root = document.documentElement;
+  const cmd = document.getElementById('cmdk');
+  const input = document.getElementById('cmdk-input');
+  const list = document.getElementById('cmdk-list');
+  if(!cmd || !input || !list) return;
 
-  const countSpans = document.querySelectorAll('.meter.count span');
-  function animateCountSpan(s){
-    const target = +(s.dataset.count || s.parentElement?.dataset.count || 0);
-    if(!target){ s.textContent = '0'; return; }
-    let n=0; const step = Math.max(1, Math.floor(target/40));
-    const t=()=>{ n+=step; if(n>=target) n=target; s.textContent = String(n); if(n<target) requestAnimationFrame(t); };
-    t();
+  const actions = [
+    {label:'Go: Home', k:'↵', fn:()=>document.getElementById('home')?.scrollIntoView({behavior:'smooth'})},
+    {label:'Go: About', k:'↵', fn:()=>document.getElementById('about')?.scrollIntoView({behavior:'smooth'})},
+    {label:'Go: Selected Work', k:'↵', fn:()=>document.getElementById('work')?.scrollIntoView({behavior:'smooth'})},
+    {label:'Go: Projects', k:'↵', fn:()=>document.getElementById('projects')?.scrollIntoView({behavior:'smooth'})},
+    {label:'Go: Impact', k:'↵', fn:()=>document.getElementById('impact')?.scrollIntoView({behavior:'smooth'})},
+    {label:'Go: Experience', k:'↵', fn:()=>document.getElementById('experience')?.scrollIntoView({behavior:'smooth'})},
+    {label:'Go: Contact', k:'↵', fn:()=>document.getElementById('contact')?.scrollIntoView({behavior:'smooth'})},
+    {label:'Toggle theme', k:'t', fn:()=>document.getElementById('theme-toggle')?.click()},
+    {label:'Switch accent', k:'', fn:()=>{
+      const acc=['graphite','coral','indigo','emerald'];
+      const cur=root.getAttribute('data-accent')||acc[0];
+      const i=(acc.indexOf(cur)+1)%acc.length; root.setAttribute('data-accent',acc[i]); localStorage.setItem('accent',acc[i]);
+    }},
+    {label:'Copy email', k:'⧉', fn:()=>navigator.clipboard?.writeText('johnpaultalag@gmail.com').then(()=>toast('Email copied ✓')).catch(()=>toast('johnpaultalag@gmail.com'))},
+    {label:'Open LinkedIn', k:'↗', fn:()=>window.open('https://www.linkedin.com/in/johnpaultalag','_blank')},
+    {label:'Open GitHub', k:'↗', fn:()=>window.open('https://github.com/junpol','_blank')},
+    {label:'Download resume', k:'⬇', fn:()=>window.open('resume.pdf','_blank')},
+    {label:'Open Connect', k:'↵', fn:()=>document.getElementById('connect')?.scrollIntoView({behavior:'smooth'})},
+    {label:'Back to top', k:'g', fn:()=>window.scrollTo({top:0, behavior:'smooth'})}
+  ];
+
+  let items = actions.slice();
+  let iSel = 0;
+
+  function render(arr){
+    list.innerHTML = '';
+    arr.forEach((a, i)=>{
+      const li = document.createElement('li');
+      li.setAttribute('role','option');
+      li.setAttribute('aria-selected', String(i === iSel));
+      li.innerHTML = `<span>${a.label}</span><span class="k">${a.k||''}</span>`;
+      li.addEventListener('mousemove', ()=>{ iSel = i; highlight(); });
+      li.addEventListener('click', ()=>{ a.fn(); close(); });
+      list.appendChild(li);
+    });
   }
-  const ioC = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ animateCountSpan(e.target); ioC.unobserve(e.target);} });
-  }, { threshold: .25, rootMargin: "0px 0px -10% 0px" });
-  countSpans.forEach(s=>{
-    if(!s.dataset.count && s.parentElement?.dataset.count){
-      s.dataset.count = s.parentElement.dataset.count;
+  function highlight(){
+    Array.from(list.children).forEach((el, j)=> el.setAttribute('aria-selected', String(j===iSel)));
+  }
+  function open(){
+    cmd.setAttribute('aria-hidden','false');
+    input.value=''; iSel=0; render(items); highlight();
+    setTimeout(()=> input.focus(), 10);
+  }
+  function close(){
+    cmd.setAttribute('aria-hidden','true');
+  }
+
+  function filter(q){
+    const s = q.trim().toLowerCase();
+    items = s ? actions.filter(a => a.label.toLowerCase().includes(s)) : actions.slice();
+    iSel = 0; render(items); highlight();
+  }
+
+  input.addEventListener('input', ()=> filter(input.value));
+  input.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){ e.preventDefault(); close(); }
+    if(e.key === 'ArrowDown'){ e.preventDefault(); iSel = Math.min(iSel+1, items.length-1); highlight(); }
+    if(e.key === 'ArrowUp'){ e.preventDefault(); iSel = Math.max(iSel-1, 0); highlight(); }
+    if(e.key === 'Enter'){ e.preventDefault(); items[iSel]?.fn?.(); close(); }
+  });
+
+  cmd.addEventListener('click', (e)=>{ if(e.target.classList.contains('cmdk-backdrop')) close(); });
+
+  function isTyping(){ return ['INPUT','TEXTAREA'].includes(document.activeElement?.tagName); }
+  document.addEventListener('keydown', (e)=>{
+    if(e.metaKey && e.key.toLowerCase()==='k'){ e.preventDefault(); open(); return; }
+    if(!isTyping() && e.key.toLowerCase()==='k'){ e.preventDefault(); open(); }
+  });
+})();
+
+// === Tilt effect ===
+(function(){
+  const els = document.querySelectorAll('.tilt');
+  els.forEach(el=>{
+    let rect = null;
+    function onMove(e){
+      rect = rect || el.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      const rx = (0.5 - y) * 6; // tilt range
+      const ry = (x - 0.5) * 8;
+      el.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
     }
-    if(inViewport(s)) animateCountSpan(s); else ioC.observe(s);
+    function onLeave(){ el.style.transform = ''; rect = null; }
+    el.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', onLeave);
   });
 })();

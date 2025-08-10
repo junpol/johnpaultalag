@@ -294,61 +294,44 @@ html.theme-xfade body, html.theme-xfade .btn, html.theme-xfade .card, html.theme
 .center{ text-align:center; }
 
 
-/* === Breathing Room Upgrade (v1) === */
-:root{
-  --space-xs: 6px;
-  --space-sm: 10px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --space-2xl: 48px;
-  --space-3xl: 72px;
-  --space-4xl: 110px;
-}
+/* Active nav link */
+.links a.active{ border-bottom: 2px solid var(--ink); }
 
-/* Typography rhythm */
-body{ line-height: 1.72; }
-.lede{ line-height: 1.7; }
-
-/* Hero spacing */
-.hero-inner{ padding: 140px 24px 80px; }
-
-/* Section rhythm */
-.section{ padding: var(--space-4xl) 24px; }
-.section-head{ margin-bottom: var(--space-lg); }
-.section-head h2{ letter-spacing: -0.01em; }
-
-/* Increase grid gaps site-wide */
-.grid{ gap: 20px; }
-
-/* Card/tile/timeline breathing */
-.cards .card{ padding: 22px; gap: 16px; }
-.gallery .tile{ border-radius: 18px; }
-.timeline .row{ padding: 20px; gap: 18px; }
-
-/* Slightly increase vertical spacing within About */
-.about-stats{ gap: 12px; margin-top: 14px; }
-.badges{ gap: 10px; }
-
-/* Buttons group spacing */
-.btn-group{ gap: 18px; margin-top: 18px; }
-
-/* Mobile tap targets & spacing */
-.hamburger{ height: 44px; width: 48px; }
+/* Sticky mobile CTA */
+.sticky-cta{ display:none; }
 @media (max-width:900px){
-  .section{ padding: var(--space-3xl) 18px; }
-  .links a{ padding: 12px 14px; } /* bigger tap targets */
-  .hero-inner{ padding: 120px 20px 64px; }
-  .grid{ gap: 18px; }
+  .sticky-cta{
+    position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
+    display: grid; grid-auto-flow: column; gap: 12px; z-index: 91;
+    border: 1px solid var(--line); border-radius: 16px; padding: 8px 10px;
+    background: var(--paper-true); box-shadow: 0 12px 22px rgba(0,0,0,.16);
+  }
+  .sticky-cta .btn{ min-width: 0; padding: 10px 14px; }
 }
 
 
-/* --- Bugfix v2 --- */
-/* Hide mobile controls on desktop explicitly */
-@media (min-width:901px){
-  .controls--mobile{ display: none !important; }
+/* --- Command Palette --- */
+#cmdk{ position: fixed; inset: 0; z-index: 120; display:none; }
+#cmdk[aria-hidden="false"]{ display:block; }
+#cmdk .cmdk-backdrop{ position:absolute; inset:0; background: rgba(0,0,0,.35); }
+#cmdk .cmdk-panel{
+  position: absolute; left: 50%; top: 14%;
+  transform: translateX(-50%);
+  width: min(720px, 92vw); background: var(--paper-true); border:1px solid var(--line);
+  border-radius: 16px; box-shadow: 0 22px 44px rgba(0,0,0,.22); padding: 12px;
 }
+#cmdk-input{ width:100%; padding: 12px 14px; border:1px solid var(--line); border-radius: 12px; background: var(--paper); color: var(--ink); font-size: 16px; }
+#cmdk-list{ list-style:none; padding:10px 0 0; margin:0; max-height: 52vh; overflow:auto; }
+#cmdk-list li{ display:flex; align-items:center; justify-content:space-between; padding: 10px 12px; border-radius: 10px; border:1px solid transparent; cursor:pointer; }
+#cmdk-list li[aria-selected="true"]{ background: color-mix(in oklab, var(--brand) 8%, var(--paper-true)); border-color: color-mix(in oklab, var(--brand) 18%, var(--line)); }
+#cmdk-list .k{ opacity:.7; font-size: 12px; padding: 2px 6px; border:1px solid var(--line); border-radius: 6px; }
+.cmdk-hint{ color: var(--muted); font-size: 12px; padding: 8px 2px 2px; text-align:center; }
 
-/* Nudge space before Impact to separate from Projects */
-#projects{ margin-bottom: 16px; }
-#impact{ padding-top: calc(var(--space-4xl) + 8px); }
+/* Evidence details */
+details.evidence{ margin-top: 10px; }
+details.evidence summary{ cursor:pointer; font-weight: 800; }
+details.evidence[open]{ border-top: 1px dashed var(--line); padding-top: 8px; }
+
+/* Tilt effect */
+.card.tilt, .tile.tilt{ transform-style: preserve-3d; perspective: 700px; }
+.card.tilt:hover, .tile.tilt:hover{ will-change: transform; }
