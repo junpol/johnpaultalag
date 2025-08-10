@@ -5,26 +5,48 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const heroBg = document.querySelector('.hero-bg');
 window.addEventListener('scroll', ()=>{
   const y = window.scrollY * 0.15;
-  heroBg.style.transform = `translateY(${y}px)`;
+  if(heroBg) heroBg.style.transform = `translateY(${y}px)`;
 }, {passive:true});
 
 // Theme & accent
 const root = document.documentElement;
 const savedTheme = localStorage.getItem('theme'); if(savedTheme) root.setAttribute('data-theme', savedTheme);
 const savedAccent = localStorage.getItem('accent'); if(savedAccent) root.setAttribute('data-accent', savedAccent);
-document.getElementById('theme-toggle').addEventListener('click', ()=>{
+
+// Dual theme toggles (desktop + mobile)
+function toggleTheme(){
+  withThemeFade(()=>{
   const cur = root.getAttribute('data-theme') || 'light';
   const nxt = cur === 'light' ? 'dark' : 'light';
   root.setAttribute('data-theme', nxt); localStorage.setItem('theme', nxt);
-});
+  });
+}
+document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
+document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggleTheme);
+
+// Accent swatches
 document.querySelectorAll('.swatch').forEach(b=> b.addEventListener('click', ()=>{
   root.setAttribute('data-accent', b.dataset.accent);
   localStorage.setItem('accent', b.dataset.accent);
 }));
 
+// Mobile menu
+const menuBtn = document.getElementById('menu-toggle');
+if(menuBtn){
+  menuBtn.addEventListener('click', ()=>{
+    const open = document.body.classList.toggle('menu-open');
+    menuBtn.setAttribute('aria-expanded', String(open));
+  });
+  // Close on link click
+  document.querySelectorAll('#site-menu a').forEach(a=> a.addEventListener('click', ()=>{
+    document.body.classList.remove('menu-open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }));
+}
+
 // Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
-  const id=a.getAttribute('href'); if(id.length>1){ e.preventDefault(); document.querySelector(id)?.scrollIntoView({behavior:'smooth'}); }
+  const id=a.getAttribute('href'); if(id && id.length>1){ e.preventDefault(); document.querySelector(id)?.scrollIntoView({behavior:'smooth'}); }
 }));
 
 // Toasts
@@ -89,3 +111,131 @@ document.querySelector('.lb-close').addEventListener('click', closeLightbox);
 document.querySelector('.lb-next').addEventListener('click', next);
 document.querySelector('.lb-prev').addEventListener('click', prev);
 lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
+
+// Impact meters animation
+const meters = document.querySelectorAll('.meter:not(.count)');
+const mObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el = e.target;
+      const pct = Math.max(0, Math.min(100, parseInt(el.dataset.percent||'0',10)));
+      let cur = 0;
+      const sweep = ()=>{
+        cur += Math.max(1, Math.ceil(pct/40));
+        if(cur > pct) cur = pct;
+        el.style.background = `conic-gradient(var(--brand) ${3.6*cur}deg, var(--line) 0deg)`;
+        if(cur < pct) requestAnimationFrame(sweep);
+      };
+      sweep();
+      mObs.unobserve(el);
+    }
+  });
+},{threshold:.6});
+meters.forEach(m=> mObs.observe(m));
+
+// Count meter hookup
+document.querySelectorAll('.meter.count span').forEach(s=>{
+  s.dataset.count = s.parentElement.dataset.count;
+  const target = +s.dataset.count || 0; let n=0; const step = Math.max(1, Math.floor(target/40));
+  const t=()=>{ n+=step; if(n>=target) n=target; s.textContent = (n).toString(); if(n<target) requestAnimationFrame(t); }; 
+  const io = new IntersectionObserver(es=>{ es.forEach(x=>{ if(x.isIntersecting){ t(); io.unobserve(s); } }); },{threshold:.6});
+  io.observe(s);
+});
+
+// Contact form handling (mailto + clipboard fallback)
+const form = document.getElementById('contactForm');
+const copyBtn = document.getElementById('copyMessage');
+if(form){
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const name = (document.getElementById('name')?.value || '').trim();
+    const email = (document.getElementById('email')?.value || '').trim();
+    const message = (document.getElementById('message')?.value || '').trim();
+    const subject = `Portfolio inquiry from ${name}`;
+    const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${encodeURIComponent(message)}`;
+    const mailto = `mailto:johnpaultalag@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+    try{
+      window.location.href = mailto;
+      toast('Opening email…');
+    }catch{
+      toast('Could not open email app');
+    }
+  });
+}
+if(copyBtn){
+  copyBtn.addEventListener('click', async ()=>{
+    const name = (document.getElementById('name')?.value || '').trim();
+    const email = (document.getElementById('email')?.value || '').trim();
+    const message = (document.getElementById('message')?.value || '').trim();
+    const text = `Inquiry via portfolio\nName: ${name}\nEmail: ${email}\n\n${message}`;
+    try{ await navigator.clipboard.writeText(text); toast('Message copied ✓'); }
+    catch{ toast('Copy not available'); }
+  });
+}
+
+
+// Scroll progress indicator
+window.addEventListener('scroll', ()=>{
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrolled = (window.scrollY / docHeight) * 100;
+  document.documentElement.style.setProperty('--scroll-progress', scrolled + '%');
+},{passive:true});
+
+
+
+// --- Staggered reveal logic ---
+function applyStagger(container){
+  if(!container) return;
+  container.classList.add('stagger');
+  Array.from(container.children).forEach((child, i)=> child.setAttribute('data-i', i));
+}
+// mark key containers
+applyStagger(document.querySelector('.cards'));
+applyStagger(document.querySelector('.gallery'));
+applyStagger(document.querySelector('.timeline'));
+
+// Observer to toggle stagger class
+const staggers = document.querySelectorAll('.stagger');
+const sObs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      sObs.unobserve(e.target);
+    }
+  });
+},{threshold:.18});
+staggers.forEach(el=> sObs.observe(el));
+
+// --- Scroll progress indicator ---
+const progressEl = document.querySelector('.scroll-progress span');
+function setProgress(){
+  if(!progressEl) return;
+  const h = document.documentElement;
+  const max = (h.scrollHeight - h.clientHeight);
+  const top = (h.scrollTop || document.body.scrollTop);
+  const pct = max > 0 ? top / max : 0;
+  progressEl.style.width = (pct * 100).toFixed(2) + '%';
+}
+window.addEventListener('scroll', setProgress, {passive:true});
+window.addEventListener('load', setProgress);
+
+
+
+// --- Back to top ---
+const backBtn = document.getElementById('backToTop');
+function onScrollTopBtn(){
+  if(!backBtn) return;
+  const show = (window.scrollY || document.documentElement.scrollTop) > 420;
+  backBtn.classList.toggle('show', show);
+}
+window.addEventListener('scroll', onScrollTopBtn, {passive:true});
+window.addEventListener('load', onScrollTopBtn);
+backBtn?.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+// --- Theme fade helper ---
+function withThemeFade(fn){
+  document.documentElement.classList.add('theme-xfade');
+  try{ fn(); } finally {
+    setTimeout(()=> document.documentElement.classList.remove('theme-xfade'), 260);
+  }
+}

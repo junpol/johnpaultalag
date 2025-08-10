@@ -21,13 +21,23 @@ img{max-width:100%;display:block}
 :where(a,button):focus-visible{box-shadow:0 0 0 3px var(--focus);border-radius:10px;outline:0}
 
 .nav{position:sticky;top:0;z-index:60;background:color-mix(in oklab,var(--paper) 92%, transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
-.nav-inner{max-width:1180px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.nav-inner{max-width:1180px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .brand{font-weight:800;letter-spacing:.04em;text-decoration:none;color:var(--ink)}
-.links{display:flex;gap:18px}
+
+/* Hamburger */
+.hamburger{display:none;background:transparent;border:1px solid var(--line);border-radius:10px;height:40px;width:44px;align-items:center;justify-content:center}
+.hamburger .bar{display:block;width:22px;height:2px;background:var(--ink);margin:3px auto;transition:transform .2s ease, opacity .2s ease}
+body.menu-open .hamburger .bar:nth-child(1){transform:translateY(5px) rotate(45deg)}
+body.menu-open .hamburger .bar:nth-child(2){opacity:0}
+body.menu-open .hamburger .bar:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+
+.links{display:flex;gap:28px;align-items:center}
 .links a{color:var(--ink);text-decoration:none;font-weight:800;letter-spacing:.02em}
 .links a:hover{border-bottom:2px solid var(--ink)}
+
 .controls{display:flex;gap:8px;align-items:center}
-#theme-toggle{background:transparent;border:1px solid var(--line);border-radius:10px;height:36px;width:36px;color:var(--ink)}
+.controls--mobile{display:none}
+#theme-toggle,#theme-toggle-mobile{background:transparent;border:1px solid var(--line);border-radius:10px;height:36px;width:36px;color:var(--ink)}
 .accents{display:flex;gap:6px;margin-right:6px}
 .swatch{width:18px;height:18px;border-radius:999px;border:1px solid var(--line);background:var(--paper-true)}
 .swatch[data-accent="graphite"]{background:#111214}
@@ -62,10 +72,11 @@ img{max-width:100%;display:block}
 .strip-inner.logos img{ height:32px; filter: grayscale(100%); opacity:.8 }
 
 .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
-.cards .card{ grid-column: span 6; border:1px solid var(--line); border-radius: 16px; padding: 18px; background: var(--paper-true); cursor:pointer }
+.cards .card{ grid-column: span 6; border:1px solid var(--line); border-radius: 16px; padding: 18px; background: var(--paper-true); cursor:pointer; display:grid; grid-template-columns: 56px 1fr; gap:14px; align-items:start; }
 .cards .card h3{ margin:0 0 8px; font-size: 18px; }
 .tags{ display:flex; flex-wrap:wrap; gap: 8px; margin-top: 10px; }
 .tags span{ font-size:12px; border:1px solid var(--line); padding:4px 8px; border-radius:999px; color: var(--muted); background: var(--paper); }
+.thumb{ width:48px; height:48px; border-radius:12px; display:grid; place-items:center; color:var(--ink); background:color-mix(in oklab, var(--brand) 8%, var(--paper-true)); border:1px solid var(--line); }
 
 .gallery .tile{ grid-column: span 4; border:1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--paper-true); cursor: pointer; transition: transform .15s ease; }
 .gallery .img{ height: 220px; object-fit:cover; width:100% }
@@ -103,5 +114,181 @@ img{max-width:100%;display:block}
 .reveal{opacity:0;transform:translateY(12px);transition:opacity .4s ease, transform .4s ease}
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}}
-@media (max-width:1100px){.cards .card{grid-column:span 12}.gallery .tile{grid-column:span 6}}
-@media (max-width:700px){.gallery .tile{grid-column:span 12}.about{grid-template-columns:1fr}.timeline .row{grid-template-columns:1fr}}
+
+/* Impact meters */
+.impact{ grid-template-columns: repeat(12,1fr); gap:16px; }
+.impact-card{ grid-column: span 4; border:1px solid var(--line); border-radius:16px; background:var(--paper-true); padding:16px; text-align:center; }
+.meter{ width:120px; height:120px; margin:6px auto 10px; border-radius:999px; display:grid; place-items:center; position:relative;
+  background: conic-gradient(var(--brand) 0deg, var(--line) 0deg);
+}
+.meter::after{ content:''; position:absolute; inset:8px; background:var(--paper-true); border-radius:999px; }
+.meter span{ position:relative; font-weight:800; }
+.meter.count{ background: var(--paper-true); border:1px solid var(--line); }
+.meter.count::after{ content:none; }
+
+/* Contact form */
+.contact-grid{ display:grid; grid-template-columns: 1.1fr .9fr; gap:16px; }
+.contact-form .field{ display:grid; gap:6px; margin-bottom:10px; }
+.contact-form input, .contact-form textarea{
+  background: var(--paper-true); border:1px solid var(--line); border-radius:12px; padding:10px 12px; color: var(--ink);
+}
+.contact-form input:focus, .contact-form textarea:focus{ outline:none; box-shadow:0 0 0 3px var(--focus); }
+
+/* Micro-interactions */
+.badges span, .tags span, .logos img{ transition: transform .15s ease, filter .2s ease, opacity .2s ease; }
+.badges span:hover{ transform: translateY(-2px); }
+.tags span:hover{ transform: translateY(-1px); }
+.strip-inner.logos img:hover{ transform: scale(1.03); filter:none; opacity:1; }
+.btn:hover{ transform: translateY(-1px); }
+.btn:active{ transform: translateY(1px); }
+
+/* Dark mode hero stars */
+:root[data-theme="dark"] .hero::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.6), transparent 60%),
+    radial-gradient(1px 1px at 70% 20%, rgba(255,255,255,.4), transparent 60%),
+    radial-gradient(1px 1px at 40% 70%, rgba(255,255,255,.5), transparent 60%);
+  animation: twinkle 3s ease-in-out infinite alternate;
+}
+@keyframes twinkle{
+  from{ opacity:.35; } to{ opacity:.7; }
+}
+
+/* Responsive tweaks */
+@media (max-width:1100px){
+  .cards .card{grid-column:span 12}
+  .gallery .tile{grid-column:span 6}
+}
+@media (max-width:900px){
+  .impact-card{ grid-column: span 12; }
+  .contact-grid{ grid-template-columns: 1fr; }
+  .hamburger{display:inline-flex}
+  .controls--desktop{display:none}
+  .controls--mobile{display:flex}
+  .links{
+    position:fixed; inset:58px 12px auto 12px; background:var(--paper-true); border:1px solid var(--line);
+    border-radius:14px; padding:10px; display:grid; gap:8px;
+    transform:translateY(-12px); opacity:0; pointer-events:none; transition:transform .18s ease, opacity .18s ease;
+  }
+  body.menu-open .links{ transform:none; opacity:1; pointer-events:auto; }
+  .links a{ padding:10px 12px; border-radius:10px; }
+  .about{grid-template-columns:1fr}
+  .timeline .row{grid-template-columns:1fr}
+}
+
+
+/* --- Selected Work card layout fix --- */
+.cards .card{ display:grid; grid-template-columns:56px 1fr; align-items:flex-start; }
+.cards .card .thumb{ grid-column:1; grid-row:1 / span 3; }
+.cards .card h3{ grid-column:2; margin-top:2px; }
+.cards .card p{ grid-column:2; margin:0; color:var(--muted); }
+.cards .card .tags{ grid-column:2; }
+.cards .card *{ word-break:normal; hyphens:auto; }
+
+
+/* --- UX Enhancements --- */
+
+/* 1. Card hover lift + subtle glow */
+.cards .card:hover, .gallery .tile:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* Thumbnail hover tint */
+.cards .card .thumb {
+  position: relative;
+  overflow: hidden;
+}
+.cards .card .thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--brand);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.cards .card:hover .thumb::after {
+  opacity: 0.08;
+}
+
+/* 2. Staggered reveal animations */
+.reveal.in > * {
+  animation: staggerFade 0.5s ease forwards;
+  opacity: 0;
+}
+.reveal.in > *:nth-child(1) { animation-delay: 0.05s; }
+.reveal.in > *:nth-child(2) { animation-delay: 0.15s; }
+.reveal.in > *:nth-child(3) { animation-delay: 0.25s; }
+.reveal.in > *:nth-child(4) { animation-delay: 0.35s; }
+@keyframes staggerFade {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* 3. Scroll progress bar under nav */
+.nav::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--brand);
+  width: var(--scroll-progress, 0%);
+  transition: width 0.1s linear;
+}
+
+
+/* --- UX+ micro-interactions --- */
+.btn, .cards .card, .gallery .tile { transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease; }
+.cards .card:hover{ transform: translateY(-3px); box-shadow: 0 14px 30px color-mix(in oklab, var(--brand) 14%, transparent); }
+.gallery .tile:hover{ box-shadow: 0 12px 24px rgba(0,0,0,.12); }
+.btn-primary:hover{ box-shadow: 0 12px 18px color-mix(in oklab, var(--brand) 28%, transparent); }
+.cards .card .thumb{ position:relative; overflow:hidden; }
+.cards .card .thumb::after{ content:''; position:absolute; inset:0; background:var(--brand); opacity:0; transition:opacity .18s ease; border-radius:inherit; }
+.cards .card:hover .thumb::after{ opacity:.07; }
+
+/* --- Staggered reveal --- */
+.stagger > *{ opacity:0; transform: translateY(8px); transition: opacity .35s ease, transform .35s ease; }
+.stagger.in > *{ opacity:1; transform:none; }
+.stagger.in > *[data-i]{ transition-delay: calc(var(--d, 40ms) * attr(data-i number, 0)); } /* each child gets a delay */
+
+/* --- Scroll progress bar --- */
+.scroll-progress{ position: sticky; top:48px; height:3px; width:100%; background: transparent; z-index:61; }
+.scroll-progress span{ display:block; height:100%; width:0%; background: color-mix(in oklab, var(--brand) 60%, transparent); }
+:root[data-theme="dark"] .scroll-progress span{ background: color-mix(in oklab, var(--brand) 80%, transparent); }
+
+@media (max-width:900px){
+  .scroll-progress{ top:58px; }
+}
+
+
+/* --- Back to top button --- */
+.back-to-top{
+  position: fixed; right: 16px; bottom: 18px; z-index: 90;
+  height: 44px; width: 44px; border-radius: 12px; border:1px solid var(--line);
+  background: var(--paper-true); color: var(--ink); font-size: 20px; line-height: 1;
+  display:grid; place-items:center; box-shadow: 0 10px 22px rgba(0,0,0,.14);
+  opacity:0; transform: translateY(12px); pointer-events:none; transition: opacity .2s ease, transform .2s ease;
+}
+.back-to-top.show{ opacity:1; transform:none; pointer-events:auto; }
+.back-to-top:focus-visible{ box-shadow:0 0 0 3px var(--focus); }
+
+/* --- Theme crossfade (limited) --- */
+html.theme-xfade body, html.theme-xfade .btn, html.theme-xfade .card, html.theme-xfade .tile, html.theme-xfade .nav, html.theme-xfade .footer, html.theme-xfade .section, html.theme-xfade .timeline .row{
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+/* Connect section layout */
+.connect-section .connect-inner{
+  max-width: 980px;
+  margin: 0 auto;
+}
+.connect-section .btn-group--stack{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:18px;
+}
+.connect-section .btn-group--stack .btn{
+  min-width: 180px;
+  flex: 0 1 auto;
+}
+.center{ text-align:center; }
