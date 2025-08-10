@@ -1,204 +1,220 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light" data-accent="graphite">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>John Paul Talag — Portfolio</title>
-  <meta name="description" content="Portfolio of John Paul Talag: internal audit, analytics, research, and leadership." />
+  <meta name="description" content="Audit & analytics, without the noise. Controls, data, and decisions."/>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-  <!-- Scroll progress bar -->
-  <div id="progress"></div>
+  <a class="skip" href="#about">Skip to content</a>
+  <div id="toasts" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- Command palette -->
-  <div id="palette" aria-hidden="true">
-    <div class="palette-inner">
-      <input id="palette-input" type="text" placeholder="Jump to… (work, values, projects, about, contact)" autofocus />
-      <ul id="palette-list">
-        <li data-target="#work">Work</li>
-        <li data-target="#values">Values</li>
-        <li data-target="#projects">Projects</li>
-        <li data-target="#about">About</li>
-        <li data-target="#contact">Contact</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- NAV -->
   <header class="nav">
     <div class="nav-inner">
       <a href="#home" class="brand">JPT</a>
       <nav class="links">
-        <a href="#work">Work</a>
-        <a href="#values">Values</a>
-        <a href="#projects">Projects</a>
         <a href="#about">About</a>
+        <a href="#work">Selected Work</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
         <a href="#contact">Contact</a>
       </nav>
-      <div class="nav-cta">
+      <div class="controls">
+        <div class="accents" title="Accent">
+          <button class="swatch" data-accent="graphite" aria-label="Graphite"></button>
+          <button class="swatch" data-accent="coral" aria-label="Coral"></button>
+          <button class="swatch" data-accent="indigo" aria-label="Indigo"></button>
+          <button class="swatch" data-accent="emerald" aria-label="Emerald"></button>
+        </div>
         <button id="theme-toggle" aria-label="Toggle theme">◐</button>
       </div>
     </div>
   </header>
 
   <!-- HERO -->
-  <section id="home" class="hero">
-    <div class="blob" aria-hidden="true"></div>
+  <section id="home" class="hero" aria-label="Intro">
+    <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-inner">
-      <h1 class="name">John Paul Talag</h1>
-      <p class="lede" id="rotator">Business Economics Student</p>
-      <p class="tagline">I help teams make confident decisions with clear controls and clean data.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary magnet" href="mailto:johnpaultalag@gmail.com">Email</a>
-        <a class="btn link-underline" target="_blank" href="https://www.linkedin.com/in/johnpaultalag">LinkedIn</a>
-        <a class="btn link-underline" target="_blank" href="https://github.com/">GitHub</a>
-        <a class="btn link-underline" target="_blank" href="#" title="Resume PDF">Resume</a>
+      <h1 class="xxl">Audit & Analytics,<br/>without the noise.</h1>
+      <p class="lede">I help teams make confident decisions with clear controls and clean data.</p>
+      <div class="btn-group">
+        <button class="btn btn-pill btn-primary" id="email-copy" data-email="johnpaultalag@gmail.com"><span>Email</span></button>
+        <a class="btn btn-pill btn-ghost" target="_blank" href="https://www.linkedin.com/in/johnpaultalag"><span>LinkedIn</span></a>
+        <a class="btn btn-pill btn-ghost" target="_blank" href="https://github.com/"><span>GitHub</span></a>
+        <a class="btn btn-pill btn-ghost" target="_blank" href="resume.pdf"><span>Resume</span></a>
       </div>
     </div>
   </section>
 
-  <!-- WORK -->
+  <!-- ABOUT -->
+  <section id="about" class="section reveal">
+    <div class="section-head"><h2>About</h2></div>
+    <div class="about">
+      <img class="headshot" src="assets/headshot.svg" alt="John Paul Talag headshot placeholder"/>
+      <div class="about-content">
+        <p>👋 Hello! I'm <strong>John Paul Talag</strong> — a UC San Diego student in <strong>Business Economics</strong> with minors in <strong>Business Analytics</strong> and <strong>Cognitive Science</strong>.</p>
+        <p>I turn <strong>data into stories, strategies, and solutions</strong> so teams can move with clarity and confidence. I gravitate to where <strong>controls, risk, and technology</strong> meet real-world execution.</p>
+        <ul class="about-points">
+          <li>📊 <strong>Data analytics & internal control systems</strong></li>
+          <li>💻 <strong>Technology, risk & organizational resilience</strong></li>
+          <li>🧠 <strong>Cognitive science & decision‑making</strong></li>
+        </ul>
+        <div class="about-stats">
+          <div class="stat"><span data-count="4">0</span> workshops</div>
+          <div class="stat"><span data-count="260">0</span> mentorship matches</div>
+          <div class="stat"><span data-count="10">0</span> community events</div>
+          <div class="badges"><span>Python</span><span>Stata</span><span>SQL</span><span>Power BI</span><span>AuditBoard</span><span>DataSnipper</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AFFILIATIONS -->
+  <section class="strip" aria-label="Affiliations">
+    <div class="strip-inner logos">
+      <img src="assets/ucsd.svg" alt="UC San Diego"/>
+      <img src="assets/realty.svg" alt="Realty Income"/>
+      <img src="assets/kpmg.svg" alt="KPMG"/>
+      <img src="assets/kp.svg" alt="Kaibigang Pilipino"/>
+      <img src="assets/bap.svg" alt="BAP"/>
+      <img src="assets/ota.svg" alt="Out The Archive"/>
+    </div>
+  </section>
+
+  <!-- SELECTED WORK -->
   <section id="work" class="section">
     <div class="section-head">
-      <h2>Selected work</h2>
+      <h2>Selected Work</h2>
+      <p class="eyebrow">Recent highlights across audit, research, and student leadership.</p>
     </div>
-    <div class="cards">
-      <article class="card reveal hover-tilt">
-        <h3>Realty Income — Internal Audit</h3>
-        <p>SOX & ITGC testing. Walkthroughs with KPMG. Faster evidence with AuditBoard, DataSnipper, and Power BI.</p>
+    <div class="grid cards reveal">
+      <article class="card" data-modal="work1">
+        <h3>Internal Audit — Realty Income</h3>
+        <p>SOX & ITGC testing; walkthroughs with KPMG; faster evidence with AuditBoard/DataSnipper.</p>
         <div class="tags"><span>SOX</span><span>ITGC</span><span>AuditBoard</span><span>Power BI</span></div>
       </article>
-
-      <article class="card reveal hover-tilt">
+      <article class="card" data-modal="work2">
         <h3>Behavioral Econ — Research Assistant</h3>
-        <p>Randomized experiment on language and persistence. Analysis in Stata/Python. Clear, actionable write-up.</p>
+        <p>Randomized study on language & persistence; analysis in Stata/Python; clear reporting.</p>
         <div class="tags"><span>Experiment</span><span>Stata</span><span>Python</span></div>
       </article>
-
-      <article class="card reveal hover-tilt">
+      <article class="card" data-modal="work3">
         <h3>Kaibigang Pilipino — PD Coordinator</h3>
-        <p>4+ workshops on LinkedIn, resumes, networking. Launched the first Career Mentorship Program.</p>
+        <p>4+ workshops (LinkedIn, resumes, networking). Launched first Career Mentorship Program.</p>
         <div class="tags"><span>Program Mgmt</span><span>Workshops</span><span>Mentorship</span></div>
       </article>
-
-      <article class="card reveal hover-tilt">
+      <article class="card" data-modal="work4">
         <h3>UCSD D1 Basketball — Consulting</h3>
-        <p>Scouting frameworks & analytics to support coaching decisions. Insight → recommendation → result.</p>
+        <p>Scouting frameworks & analytics to inform coaching decisions.</p>
         <div class="tags"><span>Analytics</span><span>Consulting</span></div>
       </article>
     </div>
   </section>
 
-  <!-- VALUES -->
-  <section id="values" class="section section-alt">
-    <div class="section-head">
-      <h2>Values</h2>
-    </div>
-    <div class="grid">
-      <div class="tile reveal"><h4>Clarity first</h4><p>Make the complex legible. Then decide.</p></div>
-      <div class="tile reveal"><h4>Trust by design</h4><p>Good controls empower, not slow down.</p></div>
-      <div class="tile reveal"><h4>Learn in public</h4><p>Share process. Invite feedback.</p></div>
-      <div class="tile reveal"><h4>People > checklists</h4><p>Outcomes matter because people do.</p></div>
-    </div>
-  </section>
-
-  <!-- PROJECTS (interactive) -->
+  <!-- PROJECTS -->
   <section id="projects" class="section">
     <div class="section-head">
       <h2>Projects</h2>
+      <p class="eyebrow">Evidence, not noise.</p>
     </div>
-    <div class="cards">
-      <article class="card reveal hover-tilt project" data-project="framing">
-        <h3>Framing the Mind — Behavioral Research Pilot</h3>
-        <p>Randomized study on “test” vs “challenge” framing with 170+ UCSD students. Results → actionable recs.</p>
-        <div class="tags"><span>Experimental Design</span><span>Statistical Analysis</span><span>Qualtrics</span></div>
-      </article>
-
-      <article class="card reveal hover-tilt project" data-project="nba">
-        <h3>Data-Driven Trends in NBA Performance</h3>
-        <p>Custom Pearson correlation in core Python on 2024 stats. Clean data → clear relationships.</p>
-        <div class="tags"><span>Python</span><span>Algorithms</span><span>Data Wrangling</span></div>
-      </article>
+    <div class="grid gallery reveal">
+      <figure class="tile" data-gallery="framing">
+        <img class="img" src="assets/project1.svg" alt="Framing the Mind thumbnail"/>
+        <figcaption><h4>Framing the Mind</h4><p>Behavioral Research Pilot · 170+ students</p></figcaption>
+      </figure>
+      <figure class="tile" data-gallery="nba">
+        <img class="img" src="assets/project2.svg" alt="NBA Performance thumbnail"/>
+        <figcaption><h4>NBA Performance Trends</h4><p>Python analytics · custom correlation</p></figcaption>
+      </figure>
+      <figure class="tile" data-gallery="kp">
+        <img class="img" src="assets/project3.svg" alt="KP STAR Mentorship thumbnail"/>
+        <figcaption><h4>KP STAR Mentorship</h4><p>Program design · 260+ matches</p></figcaption>
+      </figure>
     </div>
   </section>
 
-  <!-- ABOUT (personality-forward) -->
-  <section id="about" class="section">
-    <div class="section-head">
-      <h2>About</h2>
-    </div>
-    <div class="about">
-      <div class="about-text reveal">
-        <p>👋 Hello! I'm John Paul! I’m a student at UC San Diego studying <b>Business Economics</b>, <b>Cognitive Science</b>, & <b>Business Analytics</b>.</p>
-        <p>💡 I’m passionate about turning <b>data into stories, strategies, and solutions</b>. With a foundation in analytics, cognitive insights, and execution-driven thinking, I help organizations make decisions that create real impact — for people, performance, and long-term growth.</p>
-        <p>🧭 My recent work in internal audit and IT audit has deepened my curiosity about how systems, controls, and data integrity shape organizational resilience. I enjoy exploring how risk management, ethical leadership, and technology come together to build secure, accountable, and future-ready businesses.</p>
-        <p class="mt">My work often sits at the intersection of:</p>
-        <ul class="about-points">
-          <li>📊 Data analytics and internal control systems</li>
-          <li>💻 Technology, risk, and organizational resilience</li>
-          <li>🧠 Cognitive science and strategic decision-making</li>
-        </ul>
-        <p>I thrive on continuous learning 📚, meaningful connections 🤝, and making a positive impact 🌍. I'm always open to new opportunities to grow, innovate, and lead—let’s connect!</p>
-        <p>📩 Reach me at: <a class="about-email" href="mailto:johnpaultalag@gmail.com">johnpaultalag@gmail.com</a></p>
+  <!-- EXPERIENCE -->
+  <section id="experience" class="section">
+    <div class="section-head"><h2>Experience</h2></div>
+    <div class="timeline reveal">
+      <div class="row">
+        <div class="left">2025</div>
+        <div class="right"><h4>Internal Audit Intern — Realty Income</h4><p>Learn how to learn; ask questions; embrace discomfort; people + process.</p></div>
       </div>
-      <div class="about-stats reveal">
-        <div class="stat"><span data-count="4">0</span>+ workshops</div>
-        <div class="stat"><span data-count="260">0</span>+ mentorship matches</div>
-        <div class="stat"><span data-count="10">0</span>+ community events</div>
+      <div class="row">
+        <div class="left">2024–25</div>
+        <div class="right"><h4>Professional Development Coordinator — Kaibigang Pilipino</h4><p>4+ workshops; launched mentorship program (260+ matches).</p></div>
+      </div>
+      <div class="row">
+        <div class="left">2024–25</div>
+        <div class="right"><h4>Research Lab Assistant — UC San Diego</h4><p>Behavioral/experimental econ; regression; visualization; research ops.</p></div>
+      </div>
+      <div class="row">
+        <div class="left">2024</div>
+        <div class="right"><h4>Media Director — Musicians’ Club</h4><p>Produced 11+ videos; new social strategy; +25% engagement.</p></div>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
   <section id="contact" class="section">
-    <div class="section-head">
-      <h2>Contact</h2>
-    </div>
-    <div class="contact reveal">
-      <p>Let’s talk opportunities, projects, or coffee.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary magnet" href="mailto:johnpaultalag@gmail.com">Email</a>
-        <a class="btn link-underline" target="_blank" href="https://www.linkedin.com/in/johnpaultalag">LinkedIn</a>
-        <a class="btn link-underline" target="_blank" href="https://github.com/">GitHub</a>
-      </div>
+    <div class="section-head"><h2>Contact</h2></div>
+    <p>Open to internships, analytics work, and collaboration.</p>
+    <div class="btn-group">
+      <button class="btn btn-pill btn-primary" id="email-copy-2" data-email="johnpaultalag@gmail.com"><span>Email</span></button>
+      <a class="btn btn-pill btn-ghost" target="_blank" href="https://www.linkedin.com/in/johnpaultalag"><span>LinkedIn</span></a>
+      <a class="btn btn-pill btn-ghost" target="_blank" href="https://github.com/"><span>GitHub</span></a>
+      <a class="btn btn-pill btn-ghost" target="_blank" href="resume.pdf"><span>Resume</span></a>
     </div>
   </section>
 
-  <!-- Project Modals -->
-  <div id="modal" aria-hidden="true">
-    <div class="modal-card">
-      <button id="modal-close" aria-label="Close">×</button>
-      <div id="modal-content"></div>
-    </div>
+  <!-- MODALS (CAI Stories) -->
+  <dialog id="work1" class="modal"><form method="dialog">
+    <h3>Internal Audit — Realty Income</h3>
+    <p><strong>Challenge:</strong> Ensure reliability of controls and reporting for a large public REIT.</p>
+    <p><strong>Approach:</strong> Tested 10+ ITGCs & 8+ ELCs, ran SOX walkthroughs with KPMG, accelerated evidence with AuditBoard/DataSnipper & Power BI.</p>
+    <p><strong>Impact:</strong> Improved documentation quality and testing efficiency; 50+ key report/QCC checks validated accuracy.</p>
+    <menu><button>Close</button></menu>
+  </form></dialog>
+
+  <dialog id="work2" class="modal"><form method="dialog">
+    <h3>Behavioral Econ — Research Assistant</h3>
+    <p><strong>Challenge:</strong> Understand how language framing influences student persistence.</p>
+    <p><strong>Approach:</strong> Designed randomized experiment (N=170+); analyzed with Stata/Python; enforced QC.</p>
+    <p><strong>Impact:</strong> Actionable recommendations for education programs; improved data accuracy by 15%.</p>
+    <menu><button>Close</button></menu>
+  </form></dialog>
+
+  <dialog id="work3" class="modal"><form method="dialog">
+    <h3>Kaibigang Pilipino — PD Coordinator</h3>
+    <p><strong>Challenge:</strong> Boost professional development and retention for Pilipino students at UCSD.</p>
+    <p><strong>Approach:</strong> Built workshop series and launched a structured mentorship pipeline pairing underclassmen with alumni.</p>
+    <p><strong>Impact:</strong> Increased participation; 260+ mentorship matches; replicable model for future cohorts.</p>
+    <menu><button>Close</button></menu>
+  </form></dialog>
+
+  <dialog id="work4" class="modal"><form method="dialog">
+    <h3>UCSD D1 Basketball — Consulting</h3>
+    <p><strong>Challenge:</strong> Provide coaches with decision-ready insights.</p>
+    <p><strong>Approach:</strong> Built Python/Excel dashboards; analyzed lineup efficiency & in-game trends.</p>
+    <p><strong>Impact:</strong> Clear scouting frameworks; faster tactical decisions & recruiting signals.</p>
+    <menu><button>Close</button></menu>
+  </form></dialog>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" aria-hidden="true">
+    <button class="lb-close" aria-label="Close">×</button>
+    <div class="lb-track"><img class="lb-img" alt="project image"/></div>
+    <div class="lb-nav"><button class="lb-prev" aria-label="Previous">‹</button><button class="lb-next" aria-label="Next">›</button></div>
   </div>
 
-  <footer class="footer">
-    <div class="footer-inner">© <span id="year"></span> JPT</div>
-  </footer>
-
-  <script>
-    window.PROJECTS = {
-      framing: {
-        title: "Framing the Mind: Behavioral Research Pilot",
-        period: "May 2025 — Jun 2025",
-        assoc: "Associated with UC San Diego",
-        body: `<p>Conducted a randomized behavioral experiment studying the impact of psychological framing ("test" vs. "challenge") on student performance and persistence. Designed and deployed a controlled Qualtrics survey to over 170 UCSD students, collecting performance data and demographic controls.</p>
-        <p>Analyzed results using statistical testing and derived actionable insights on motivation and language framing. Presented findings with recommendations for real-world applications in education and organizational training.</p>
-        <p class="tag-row"><span class="tag">Experimental Design</span><span class="tag">Statistical Data Analysis</span><span class="tag">Qualtrics</span><span class="tag">Causal Inference</span></p>`
-      },
-      nba: {
-        title: "Data-Driven Trends in NBA Player Performance",
-        period: "Feb 2025 — Mar 2025",
-        assoc: "Associated with UC San Diego",
-        body: `<p>Built a Python-based analytics tool to explore performance trends in 2024 NBA player stats using raw CSV data. Developed a custom correlation function from scratch (no external libraries) to analyze relationships like 3P% vs. PPG, Age vs. MPG, and FTA vs. FT%.</p>
-        <p>Parsed and cleaned data from 300+ players using <code>csv.DictReader</code>, turning unstructured inputs into actionable insights. Tested the function against positive and negative scenarios to ensure statistical accuracy. This project sharpened skills in data wrangling, algorithm design, and applied analytics, within the context of sports performance and decision-making.</p>
-        <p class="tag-row"><span class="tag">Python</span><span class="tag">Algorithms</span><span class="tag">Data Wrangling</span><a class="tag link" href="https://github.com/junpol/nba-python-analysis" target="_blank" rel="noreferrer">GitHub Repo ↗</a></p>`
-      }
-    };
-  </script>
+  <footer class="footer"><div class="footer-inner">© <span id="year"></span> JPT</div></footer>
   <script src="script.js"></script>
 </body>
 </html>
