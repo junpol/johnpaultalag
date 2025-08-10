@@ -239,3 +239,72 @@ function withThemeFade(fn){
     setTimeout(()=> document.documentElement.classList.remove('theme-xfade'), 260);
   }
 }
+
+
+// === Reliable observers v2 ===
+// Helper to check if element is in viewport
+function inViewport(el){
+  const r = el.getBoundingClientRect();
+  return r.top < (window.innerHeight * 0.9) && r.bottom > 0;
+}
+
+// Counters (About stats)
+(function(){
+  const counters = document.querySelectorAll('.stat span');
+  if(!counters.length) return;
+  function animateCounter(el){ 
+    const target = +el.dataset.count || +el.textContent || 0; 
+    if(!target){ return; }
+    let n = 0; const step = Math.max(1, Math.floor(target/40));
+    const t=()=>{ n += step; if(n >= target) n = target; el.textContent = String(n); if(n < target) requestAnimationFrame(t); };
+    t();
+  }
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ animateCounter(e.target); io.unobserve(e.target); } });
+  }, { threshold: .35, rootMargin: "0px 0px -10% 0px" });
+  counters.forEach(c=>{
+    // Ensure data-count is present from parent .stat
+    if(!c.dataset.count && c.parentElement?.dataset.count){
+      c.dataset.count = c.parentElement.dataset.count;
+    }
+    if(inViewport(c)) animateCounter(c); else io.observe(c);
+  });
+})();
+
+// Impact meters (circle % + count)
+(function(){
+  const meters = document.querySelectorAll('.meter:not(.count)');
+  function sweepMeter(el){
+    const pct = Math.max(0, Math.min(100, parseInt(el.dataset.percent||'0',10)));
+    let cur = 0;
+    const sweep = ()=>{
+      cur += Math.max(1, Math.ceil(pct/40));
+      if(cur > pct) cur = pct;
+      el.style.background = `conic-gradient(var(--brand) ${3.6*cur}deg, var(--line) 0deg)`;
+      if(cur < pct) requestAnimationFrame(sweep);
+    };
+    sweep();
+  }
+  const ioM = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ sweepMeter(e.target); ioM.unobserve(e.target);} });
+  }, { threshold: .25, rootMargin: "0px 0px -10% 0px" });
+  meters.forEach(m=>{ if(inViewport(m)) sweepMeter(m); else ioM.observe(m); });
+
+  const countSpans = document.querySelectorAll('.meter.count span');
+  function animateCountSpan(s){
+    const target = +(s.dataset.count || s.parentElement?.dataset.count || 0);
+    if(!target){ s.textContent = '0'; return; }
+    let n=0; const step = Math.max(1, Math.floor(target/40));
+    const t=()=>{ n+=step; if(n>=target) n=target; s.textContent = String(n); if(n<target) requestAnimationFrame(t); };
+    t();
+  }
+  const ioC = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ animateCountSpan(e.target); ioC.unobserve(e.target);} });
+  }, { threshold: .25, rootMargin: "0px 0px -10% 0px" });
+  countSpans.forEach(s=>{
+    if(!s.dataset.count && s.parentElement?.dataset.count){
+      s.dataset.count = s.parentElement.dataset.count;
+    }
+    if(inViewport(s)) animateCountSpan(s); else ioC.observe(s);
+  });
+})();

@@ -25,7 +25,7 @@ img{max-width:100%;display:block}
 .brand{font-weight:800;letter-spacing:.04em;text-decoration:none;color:var(--ink)}
 
 /* Hamburger */
-.hamburger{display:none;background:transparent;border:1px solid var(--line);border-radius:10px;height:40px;width:44px;align-items:center;justify-content:flex-start}
+.hamburger{display:none;background:transparent;border:1px solid var(--line);border-radius:10px;height:40px;width:44px;align-items:center;justify-content:center}
 .hamburger .bar{display:block;width:22px;height:2px;background:var(--ink);margin:3px auto;transition:transform .2s ease, opacity .2s ease}
 body.menu-open .hamburger .bar:nth-child(1){transform:translateY(5px) rotate(45deg)}
 body.menu-open .hamburger .bar:nth-child(2){opacity:0}
@@ -91,7 +91,7 @@ body.menu-open .hamburger .bar:nth-child(3){transform:translateY(-5px) rotate(-4
 .timeline h4{ margin: 0 0 6px; }
 
 .btn-group{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px}
-.btn{display:inline-flex;align-items:center;justify-content:flex-start;text-decoration:none;cursor:pointer;transition:transform .12s ease, box-shadow .12s ease, background .15s ease, border-color .15s ease}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;transition:transform .12s ease, box-shadow .12s ease, background .15s ease, border-color .15s ease}
 .btn-pill{border-radius:16px;padding:14px 22px;border:1px solid var(--line);min-width:132px;font-weight:800}
 .btn-primary{background:var(--brand);color:var(--brand-ink);border-color:color-mix(in oklab, var(--brand) 86%, #000 0%);box-shadow:0 6px 0 color-mix(in oklab, var(--brand) 40%, transparent)}
 .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 12px color-mix(in oklab, var(--brand) 22%, transparent)}
@@ -281,11 +281,11 @@ html.theme-xfade body, html.theme-xfade .btn, html.theme-xfade .card, html.theme
 
 /* Connect section layout */
 .connect-section .connect-inner{
-  max-width:1180px;
+  max-width: 980px;
   margin: 0 auto;
 }
 .connect-section .btn-group--stack{
-  display:flex; flex-wrap:wrap; justify-content:flex-start; gap:18px;
+  display:flex; flex-wrap:wrap; justify-content:center; gap:18px;
 }
 .connect-section .btn-group--stack .btn{
   min-width: 180px;
@@ -293,21 +293,62 @@ html.theme-xfade body, html.theme-xfade .btn, html.theme-xfade .card, html.theme
 }
 .center{ text-align:center; }
 
-.connect-section .connect-inner {
-  padding-left: var(--section-side-padding, 40px);
+
+/* === Breathing Room Upgrade (v1) === */
+:root{
+  --space-xs: 6px;
+  --space-sm: 10px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 72px;
+  --space-4xl: 110px;
 }
 
-/* --- Connect alignment fix (final) --- */
-.connect-section .connect-inner{
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  max-width: 1180px; /* keep consistent with .section */
-  margin: 0 auto;
+/* Typography rhythm */
+body{ line-height: 1.72; }
+.lede{ line-height: 1.7; }
+
+/* Hero spacing */
+.hero-inner{ padding: 140px 24px 80px; }
+
+/* Section rhythm */
+.section{ padding: var(--space-4xl) 24px; }
+.section-head{ margin-bottom: var(--space-lg); }
+.section-head h2{ letter-spacing: -0.01em; }
+
+/* Increase grid gaps site-wide */
+.grid{ gap: 20px; }
+
+/* Card/tile/timeline breathing */
+.cards .card{ padding: 22px; gap: 16px; }
+.gallery .tile{ border-radius: 18px; }
+.timeline .row{ padding: 20px; gap: 18px; }
+
+/* Slightly increase vertical spacing within About */
+.about-stats{ gap: 12px; margin-top: 14px; }
+.badges{ gap: 10px; }
+
+/* Buttons group spacing */
+.btn-group{ gap: 18px; margin-top: 18px; }
+
+/* Mobile tap targets & spacing */
+.hamburger{ height: 44px; width: 48px; }
+@media (max-width:900px){
+  .section{ padding: var(--space-3xl) 18px; }
+  .links a{ padding: 12px 14px; } /* bigger tap targets */
+  .hero-inner{ padding: 120px 20px 64px; }
+  .grid{ gap: 18px; }
 }
-.connect-section .btn-group--stack{
-  justify-content: flex-start !important;
-  gap: 18px;
+
+
+/* --- Bugfix v2 --- */
+/* Hide mobile controls on desktop explicitly */
+@media (min-width:901px){
+  .controls--mobile{ display: none !important; }
 }
-.connect-section .center{
-  text-align: left !important;
-}
+
+/* Nudge space before Impact to separate from Projects */
+#projects{ margin-bottom: 16px; }
+#impact{ padding-top: calc(var(--space-4xl) + 8px); }
