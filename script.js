@@ -378,3 +378,123 @@ function withThemeFade(fn){
     el.addEventListener('mouseleave', onLeave);
   });
 })();
+
+// =================== Feature: Timeline Scrubber ===================
+(function(){
+  const exp = document.getElementById('experience');
+  if(!exp) return;
+  const head = exp.querySelector('.section-head') || exp.querySelector('h2')?.parentElement || exp;
+  const scrub = document.createElement('div');
+  scrub.className = 'exp-scrubber';
+  scrub.innerHTML = `
+    <span class="exp-year" id="expYear">—</span>
+    <input id="expRange" type="range" min="0" max="0" step="1" value="0" aria-label="Experience timeline">
+  `;
+  head.appendChild(scrub);
+  const rows = exp.querySelectorAll('.timeline .row');
+  if(!rows.length){ scrub.style.display='none'; return; }
+  const range = scrub.querySelector('#expRange');
+  const yearLabel = scrub.querySelector('#expYear');
+  range.max = String(rows.length - 1);
+  function updateFromIndex(i){
+    i = Math.max(0, Math.min(rows.length-1, i));
+    const row = rows[i];
+    row.scrollIntoView({behavior:'smooth', block:'center'});
+    const year = row.querySelector('.left')?.textContent.trim() || '';
+    yearLabel.textContent = year || '—';
+    range.value = String(i);
+  }
+  range.addEventListener('input', ()=> updateFromIndex(parseInt(range.value,10)||0));
+  const obs = new IntersectionObserver((entries)=>{
+    const visible = entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio - a.intersectionRatio);
+    if(!visible.length) return;
+    const idx = Array.from(rows).indexOf(visible[0].target);
+    const year = visible[0].target.querySelector('.left')?.textContent.trim() || '—';
+    yearLabel.textContent = year;
+    range.value = String(idx);
+  }, {rootMargin:'-40% 0px -40% 0px', threshold:[0,0.25,0.5,0.75,1]});
+  rows.forEach(r => obs.observe(r));
+})();
+
+// =================== Feature: AMA Buttons & Modal ===================
+(function(){
+  const work = document.getElementById('work');
+  const amaModal = document.getElementById('amaModal');
+  const amaList = amaModal ? document.getElementById('amaList') : null;
+  const amaTitle = amaModal ? document.getElementById('amaTitle') : null;
+  const amaChip = document.getElementById('amaChip');
+  if(!work || !amaModal || !amaList || !amaTitle || !amaChip) return;
+
+  function getQA(title){
+    const generic = [
+      ["How did you validate controls?", "Mapped design→operation, sampled evidence, tied exceptions to risk statements, and documented reproducible steps."],
+      ["What failed first and why?", "Initial access review showed stale accounts due to deprovisioning gaps; tightened joiner/mover/leaver controls and reminders."],
+      ["What did you automate?", "Checklists/templates; Power BI & DataSnipper to speed reconciliation, sampling, and evidence capture."],
+      ["How did you measure impact?", "Fewer QC issues, faster reviews, and on‑time delivery; documented before/after where possible."],
+      ["What would you do differently?", "Align earlier on 'sufficient evidence' and owner responsibilities to avoid late surprises."],
+      ["How is this transferable?", "Same approach applies across controls/analytics: clarify, test, document, iterate."]
+    ];
+    // Light keyword tailoring
+    if(title && /Realty Income|Internal Audit/i.test(title)){
+      generic.unshift(["How did you test ITGCs/ELCs?", "Followed control matrix; sampled & traced to criteria; documented in AuditBoard; coordinated PBCs."]);
+    }
+    if(title && /Research|Lab|UC San Diego/i.test(title)){
+      generic.unshift(["What did you analyze?", "Experimental econ data; ran regressions/visuals; ensured reproducibility and clarity of code."]);
+    }
+    return generic;
+  }
+
+  function openAMA(forEl){
+    let title = "Project";
+    const h = forEl?.querySelector?.('h3,h4,h2') || forEl?.closest?.('dialog')?.querySelector('h3,h4,h2');
+    if(h) title = h.textContent.trim();
+    amaTitle.textContent = "Ask Me Anything — " + title;
+    amaList.innerHTML = "";
+    const qa = getQA(title);
+    qa.forEach(([q,a], i)=>{
+      const div = document.createElement('div'); div.className = 'ama-item'; div.setAttribute('role','listitem'); div.id = 'ama-q'+(i+1);
+      div.innerHTML = `<h4>${q}</h4><p>${a}</p>`;
+      amaList.appendChild(div);
+    });
+    amaModal.showModal();
+  }
+
+  // Add visible AMA pills next to each project title in #work
+  const titleEls = work.querySelectorAll('h3, h4');
+  titleEls.forEach(t => {
+    if(t.parentElement.querySelector('.ama-btn')) return;
+    const btn = document.createElement('button');
+    btn.className = 'ama-btn';
+    btn.type = 'button';
+    btn.title = 'Curated Q&A about this project';
+    btn.innerHTML = '<span class="dot"></span><span>AMA</span>';
+    btn.addEventListener('click', (e)=>{ e.preventDefault(); openAMA(t.closest('.card, .row, section, article') || work); });
+    t.insertAdjacentElement('afterend', btn);
+  });
+
+  // Duplicate AMA pill inside each modal header (after <h3>)
+  document.querySelectorAll('dialog.modal').forEach(d => {
+    const h = d.querySelector('h3');
+    if(!h || d.querySelector('.ama-btn')) return;
+    const btn = document.createElement('button');
+    btn.className = 'ama-btn';
+    btn.type = 'button';
+    btn.title = 'Curated Q&A about this project';
+    btn.innerHTML = '<span class="dot"></span><span>AMA</span>';
+    btn.addEventListener('click', (e)=>{ e.preventDefault(); openAMA(d); });
+    h.insertAdjacentElement('afterend', btn);
+  });
+
+  // Sticky "Questions?" chip: shows when a project is in view; opens AMA for the most visible card
+  const cards = work.querySelectorAll('.card, .row, article, section');
+  const vis = new Map();
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e => vis.set(e.target, e.isIntersecting ? e.intersectionRatio : 0));
+    const top = Array.from(vis.entries()).sort((a,b)=>b[1]-a[1])[0];
+    const hasVisible = top && top[1] > 0.2;
+    amaChip.setAttribute('aria-hidden', hasVisible ? 'false' : 'true');
+    amaChip.onclick = hasVisible ? ()=> openAMA(top[0]) : null;
+  }, {rootMargin:'-20% 0px -20% 0px', threshold:[0,0.25,0.5,0.75,1]});
+  cards.forEach(c => io.observe(c));
+})();
+

@@ -285,7 +285,7 @@ html.theme-xfade body, html.theme-xfade .btn, html.theme-xfade .card, html.theme
   margin: 0 auto;
 }
 .connect-section .btn-group--stack{
-  display:flex; flex-wrap:wrap; justify-content:center; gap:18px;
+  display:flex; flex-wrap:wrap; justify-content:flex-start; gap:18px;
 }
 .connect-section .btn-group--stack .btn{
   min-width: 180px;
@@ -335,3 +335,24 @@ details.evidence[open]{ border-top: 1px dashed var(--line); padding-top: 8px; }
 /* Tilt effect */
 .card.tilt, .tile.tilt{ transform-style: preserve-3d; perspective: 700px; }
 .card.tilt:hover, .tile.tilt:hover{ will-change: transform; }
+
+/* --- AMA UI --- */
+.ama-btn{display:inline-flex;align-items:center;gap:6px;margin-left:8px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-weight:600;cursor:pointer}
+.ama-btn:hover{text-decoration:underline}
+.ama-btn .dot{width:6px;height:6px;border-radius:999px;background:currentColor;opacity:.8}
+
+.ama-list{display:grid;gap:10px;margin:10px 0 0}
+.ama-item{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--paper-soft)}
+.ama-item h4{margin:0 0 6px;font-size:1rem}
+.ama-item p{margin:0}
+
+.ama-chip{position:fixed;right:16px;bottom:16px;background:var(--paper);border:1px solid var(--line);
+  border-radius:999px;padding:10px 14px;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.15);
+  opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .2s ease, transform .2s ease;z-index:999}
+.ama-chip[aria-hidden="false"]{opacity:1;transform:translateY(0);pointer-events:auto}
+
+
+/* --- Experience Timeline Scrubber (minimal) --- */
+.exp-scrubber{display:flex;align-items:center;gap:10px;margin:8px 0 2px}
+.exp-scrubber input[type="range"]{width:260px}
+.exp-year{font-variant-numeric:tabular-nums;color:var(--muted);min-width:72px;text-align:right}

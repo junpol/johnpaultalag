@@ -89,9 +89,9 @@
       <p class="lede">I help teams make confident decisions with clear controls and clean data.</p>
       <div class="btn-group">
         <button class="btn btn-pill btn-primary" id="email-copy" data-email="johnpaultalag@gmail.com"><span>Email</span></button>
-        <a class="btn btn-pill btn-ghost" target="_blank" rel="noopener" href="https://www.linkedin.com/in/johnpaultalag"><span>LinkedIn</span></a>
-        <a class="btn btn-pill btn-ghost" target="_blank" rel="noopener" href="https://github.com/"><span>GitHub</span></a>
-        <a class="btn btn-pill btn-ghost" target="_blank" rel="noopener" href="resume.pdf"><span>Resume</span></a>
+        <a class="btn btn-pill btn-primary" target="_blank" rel="noopener" href="https://www.linkedin.com/in/johnpaultalag"><span>LinkedIn</span></a>
+        <a class="btn btn-pill btn-primary" target="_blank" rel="noopener" href="https://github.com/"><span>GitHub</span></a>
+        <a class="btn btn-pill btn-primary" target="_blank" rel="noopener" href="resume.pdf"><span>Resume</span></a>
       </div>
     </div>
   </section>
@@ -265,7 +265,7 @@
     <div class="section-head"><h2>Connect</h2></div>
     <div class="connect-inner">
       <div class="btn-group btn-group--stack">
-        <a class="btn btn-pill btn-ghost" href="assets/jpt.vcf" download><span>Save Contact</span></a>
+        
         <button class="btn btn-pill btn-primary" id="email-copy-2" data-email="johnpaultalag@gmail.com"><span>Email</span></button>
         <a class="btn btn-pill btn-ghost" target="_blank" rel="noopener" href="https://www.linkedin.com/in/johnpaultalag"><span>LinkedIn</span></a>
         <a class="btn btn-pill btn-ghost" target="_blank" rel="noopener" href="https://github.com/"><span>GitHub</span></a>
@@ -365,6 +365,21 @@
       <div class="cmdk-hint">t: theme · m: menu · g: top · c: contact · ? : help · k: open</div>
     </div>
   </div>
+
+
+  <!-- AMA Modal -->
+  <dialog id="amaModal" class="modal">
+    <form method="dialog">
+      <h3 id="amaTitle">Ask Me Anything — Project</h3>
+      <div id="amaList" class="ama-list" role="list"></div>
+      <div class="modal-actions">
+        <button class="btn btn-pill btn-ghost" value="cancel"><span>Close</span></button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- AMA Sticky Chip -->
+  <div id="amaChip" class="ama-chip" aria-hidden="true" role="button" aria-label="Questions? Ask Me Anything">Questions?</div>
 
 </body>
 </html>
