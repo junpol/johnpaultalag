@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="en" data-theme="light" data-accent="graphite">
+<html lang="en" data-theme="light" data-accent="indigo">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -9,35 +10,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css"/>
-
   <link rel="canonical" href="https://junpol.github.io/johnpaultalag/"/>
-
-  <!-- Open Graph / Twitter -->
   <meta property="og:title" content="John Paul Talag — Audit & Analytics"/>
   <meta property="og:description" content="Audit & analytics, without the noise. Controls, data, and decisions."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://junpol.github.io/johnpaultalag/"/>
-  <!-- TODO: Add og:image once you have a social preview image hosted -->
+  <meta property="og:image" content="assets/og.png"/>
   <meta name="twitter:card" content="summary_large_image"/>
-
-  <!-- Structured data: Person -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "John Paul Talag",
-    "url": "https://junpol.github.io/johnpaultalag/",
-    "image": "https://junpol.github.io/johnpaultalag/assets/headshot.svg",
-    "jobTitle": "Internal Audit & Analytics",
-    "affiliation": [{"@type": "CollegeOrUniversity", "name": "University of California, San Diego"}],
-    "sameAs": [
-      "https://www.linkedin.com/in/johnpaultalag",
-      "https://github.com/junpol"
-    ]
-  }
-  </script>
-
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
   <a class="skip" href="#about">Skip to content</a>
@@ -55,8 +35,10 @@
         <a href="#about">About</a>
         <a href="#work">Selected Work</a>
         <a href="#projects">Projects</a>
+        <a href="#impact">Impact</a>
         <a href="#experience">Experience</a>
         <a href="#contact">Contact</a>
+        <a href="#connect">Connect</a>
         <div class="controls controls--mobile">
           <div class="accents" title="Accent">
             <button class="swatch" data-accent="graphite" aria-label="Graphite"></button>
@@ -77,7 +59,7 @@
         </div>
         <button id="theme-toggle" aria-label="Toggle theme">◐</button>
       </div>
-        </div>
+    </div>
     <div class="scroll-progress" aria-hidden="true"><span></span></div>
   </header>
 
@@ -85,13 +67,24 @@
   <section id="home" class="hero" aria-label="Intro">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-inner">
-      <h1 class="xxl">Audit & Analytics,<br/>without the noise.</h1>
-      <p class="lede">I help teams make confident decisions with clear controls and clean data.</p>
+      <h1 class="xxl">Turning complex data into confident decisions.</h1>
+<p class="lede">I build the controls, insights, and workflows that turn numbers into action — blending audit discipline with analytics and clear communication.</p>
       <div class="btn-group">
-        <button class="btn btn-pill btn-primary" id="email-copy" data-email="johnpaultalag@gmail.com"><span>Email</span></button>
-        <a class="btn btn-pill btn-primary" target="_blank" rel="noopener" href="https://www.linkedin.com/in/johnpaultalag"><span>LinkedIn</span></a>
-        <a class="btn btn-pill btn-primary" target="_blank" rel="noopener" href="https://github.com/"><span>GitHub</span></a>
-        <a class="btn btn-pill btn-primary" target="_blank" rel="noopener" href="resume.pdf"><span>Resume</span></a>
+        <button class="btn btn-pill btn-primary" id="email-copy" data-email="johnpaultalag@gmail.com">
+          <span>Email</span>
+        </button>
+        <a class="btn btn-pill btn-primary" target="_blank" rel="noopener" href="https://www.linkedin.com/in/johnpaultalag">
+          <span>LinkedIn</span>
+        </a>
+        <a class="btn btn-pill btn-primary" target="_blank" rel="noopener" href="https://github.com/junpol">
+          <span>GitHub</span>
+        </a>
+        <a class="btn btn-pill btn-primary" target="_blank" rel="noopener" href="resume.pdf" download>
+          <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" style="margin-right:8px">
+            <path d="M12 3v10m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+          <span>Resume</span>
+        </a>
       </div>
     </div>
   </section>
@@ -99,35 +92,33 @@
   <!-- ABOUT -->
   <section id="about" class="section reveal">
     <div class="section-head"><h2>About</h2></div>
-    <div class="about">
-      <img class="headshot" src="assets/headshot.svg" alt="John Paul Talag headshot placeholder" loading="lazy"/>
-      <div class="about-content">
-        <p>👋 Hello! I'm <strong>John Paul Talag</strong> — a UC San Diego student in <strong>Business Economics</strong> with minors in <strong>Business Analytics</strong> and <strong>Cognitive Science</strong>.</p>
-        <p>I turn <strong>data into stories, strategies, and solutions</strong> so teams can move with clarity and confidence. I gravitate to where <strong>controls, risk, and technology</strong> meet real-world execution.</p>
-        <ul class="about-points">
-          <li>📊 <strong>Data analytics & internal control systems</strong></li>
-          <li>💻 <strong>Technology, risk & organizational resilience</strong></li>
-          <li>🧠 <strong>Cognitive science & decision‑making</strong></li>
-        </ul>
-        <div class="about-stats">
-          <div class="stat"><span data-count="4">0</span> workshops</div>
-          <div class="stat"><span data-count="260">0</span> mentorship matches</div>
-          <div class="stat"><span data-count="10">0</span> community events</div>
-          <div class="badges"><span>Python</span><span>Stata</span><span>SQL</span><span>Power BI</span><span>AuditBoard</span><span>DataSnipper</span></div>
-        </div>
-      </div>
-    </div>
+    <div class="about"><img class="headshot" src="assets/headshot.svg" alt="John Paul Talag headshot placeholder" loading="lazy"/>
+<div class="about-content">
+  <p>Hi, I’m <strong>John Paul Talag</strong> — a Business Economics student at UC San Diego with minors in <strong>Business Analytics</strong> and <strong>Cognitive Science</strong>.</p>
+  <p>I focus on making systems work smarter. Recently, that’s meant auditing the controls behind a $50B+ REIT, building analytics for Division I basketball, and leading a retention program serving 250+ students.</p>
+  <ul class="about-points">
+    <li>📊 <strong>Data & controls</strong> — translating raw numbers into decision-ready insight</li>
+    <li>💻 <strong>Technology & risk</strong> — designing resilient, documented processes</li>
+    <li>🧠 <strong>How people decide</strong> — using behavioral insight to drive adoption</li>
+  </ul>
+  <div class="about-stats">
+    <div class="stat"><span data-count="4">0</span> workshops</div>
+    <div class="stat"><span data-count="260">0</span> mentorship matches</div>
+    <div class="stat"><span data-count="10">0</span> community events</div>
+    <div class="badges"><span>Python</span><span>Stata</span><span>SQL</span><span>Power BI</span><span>AuditBoard</span><span>DataSnipper</span></div>
+  </div>
+</div></div>
   </section>
 
   <!-- AFFILIATIONS -->
   <section class="strip" aria-label="Affiliations">
     <div class="strip-inner logos">
-      <img src="assets/ucsd.svg" alt="" loading="lazy"/>
-      <img src="assets/realty.svg" alt="" loading="lazy"/>
-      <img src="assets/kpmg.svg" alt="" loading="lazy"/>
-      <img src="assets/kp.svg" alt="" loading="lazy"/>
-      <img src="assets/bap.svg" alt="" loading="lazy"/>
-      <img src="assets/ota.svg" alt="" loading="lazy"/>
+      <img src="assets/ucsd.svg" alt="UCSD" loading="lazy" height="32"/>
+      <img src="assets/realty.svg" alt="Realty Income" loading="lazy" height="32"/>
+      <img src="assets/kpmg.svg" alt="KPMG" loading="lazy" height="32"/>
+      <img src="assets/kp.svg" alt="Kaibigang Pilipino" loading="lazy" height="32"/>
+      <img src="assets/bap.svg" alt="Beta Alpha Psi" loading="lazy" height="32"/>
+      <img src="assets/ota.svg" alt="Out The Archive" loading="lazy" height="32"/>
     </div>
   </section>
 
@@ -137,13 +128,24 @@
       <h2>Selected Work</h2>
       <p class="eyebrow">Recent highlights across audit, research, and student leadership.</p>
     </div>
-    <div class="grid cards reveal">
+    <div class="grid cards reveal"><article class="card tilt" data-modal="work_star">
+  <div class="thumb" aria-hidden="true">
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+      <rect x="4" y="8" width="40" height="28" rx="4" fill="currentColor" opacity=".09"/>
+      <path d="M12 24l6 6 18-18" stroke="currentColor" stroke-width="2" fill="none" opacity=".35"/>
+    </svg>
+  </div>
+  <h3>President, Academic Retention — KP STAR</h3>
+  <p>Led 10+ member board serving 250+ students; built multi‑quarter programming and a lasting mentorship model.</p>
+  <div class="tags"><span>Leadership</span><span>Retention</span><span>Program Design</span></div>
+</article>
+
       <article class="card tilt" data-modal="work1">
         <div class="thumb" aria-hidden="true">
           <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="8" width="40" height="28" rx="4" fill="currentColor" opacity=".09"/><path d="M8 14h32v2H8zm0 6h20v2H8zm0 6h26v2H8z" fill="currentColor" opacity=".35"/></svg>
         </div>
         <h3>Internal Audit — Realty Income</h3>
-        <p>SOX & ITGC testing; walkthroughs with KPMG; faster evidence with AuditBoard/DataSnipper.</p>
+        <p>SOX & ITGC testing across a $50B+ REIT; led walkthroughs with KPMG; accelerated evidence with AuditBoard, DataSnipper, and Power BI.</p>
         <div class="tags"><span>SOX</span><span>ITGC</span><span>AuditBoard</span><span>Power BI</span></div>
       </article>
       <article class="card tilt" data-modal="work2">
@@ -151,7 +153,7 @@
           <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="28" r="6" fill="currentColor" opacity=".12"/><rect x="24" y="12" width="4" height="24" fill="currentColor" opacity=".35"/><rect x="32" y="18" width="4" height="18" fill="currentColor" opacity=".35"/></svg>
         </div>
         <h3>Behavioral Econ — Research Assistant</h3>
-        <p>Randomized study on language & persistence; analysis in Stata/Python; clear reporting.</p>
+        <p>Designed a randomized study on language and persistence; analyzed in Stata/Python; delivered clear, documented reporting.</p>
         <div class="tags"><span>Experiment</span><span>Stata</span><span>Python</span></div>
       </article>
       <article class="card tilt" data-modal="work3">
@@ -159,7 +161,7 @@
           <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M8 24h12l4 6 4-12 4 6h8" stroke="currentColor" stroke-width="2" fill="none" opacity=".35"/></svg>
         </div>
         <h3>Kaibigang Pilipino — PD Coordinator</h3>
-        <p>4+ workshops (LinkedIn, resumes, networking). Launched first Career Mentorship Program.</p>
+        <p>4+ workshops (LinkedIn, résumés, networking). Launched the first Career Mentorship Program with 260+ matches.</p>
         <div class="tags"><span>Program Mgmt</span><span>Workshops</span><span>Mentorship</span></div>
       </article>
       <article class="card tilt" data-modal="work4">
@@ -167,7 +169,7 @@
           <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="16" width="32" height="16" rx="2" fill="currentColor" opacity=".09"/><path d="M12 20h12v2H12zm0 6h24v2H12z" fill="currentColor" opacity=".35"/></svg>
         </div>
         <h3>UCSD D1 Basketball — Consulting</h3>
-        <p>Scouting frameworks & analytics to inform coaching decisions.</p>
+        <p>Built Python/Excel dashboards and scouting frameworks that informed coaching decisions.</p>
         <div class="tags"><span>Analytics</span><span>Consulting</span></div>
       </article>
     </div>
@@ -181,15 +183,15 @@
     </div>
     <div class="grid gallery reveal">
       <figure class="tile tilt" data-gallery="framing">
-        <img class="img" src="assets/project1.svg" alt="Framing the Mind thumbnail" loading="lazy"/>
+        <img class="img" src="assets/project1.svg" alt="Framing the Mind thumbnail" loading="lazy" width="600" height="360"/>
         <figcaption><h4>Framing the Mind</h4><p>Behavioral Research Pilot · 170+ students</p></figcaption>
       </figure>
       <figure class="tile tilt" data-gallery="nba">
-        <img class="img" src="assets/project2.svg" alt="NBA Performance thumbnail" loading="lazy"/>
+        <img class="img" src="assets/project2.svg" alt="NBA Performance thumbnail" loading="lazy" width="600" height="360"/>
         <figcaption><h4>NBA Performance Trends</h4><p>Python analytics · custom correlation</p></figcaption>
       </figure>
       <figure class="tile tilt" data-gallery="kp">
-        <img class="img" src="assets/project3.svg" alt="KP STAR Mentorship thumbnail" loading="lazy"/>
+        <img class="img" src="assets/project3.svg" alt="KP STAR Mentorship thumbnail" loading="lazy" width="600" height="360"/>
         <figcaption><h4>KP STAR Mentorship</h4><p>Program design · 260+ matches</p></figcaption>
       </figure>
     </div>
@@ -224,25 +226,68 @@
   <section id="experience" class="section">
     <div class="section-head"><h2>Experience</h2></div>
     <div class="timeline reveal">
-      <div class="row">
-        <div class="left">2025</div>
-        <div class="right"><h4>Internal Audit Intern — Realty Income</h4><p>Learn how to learn; ask questions; embrace discomfort; people + process.</p></div>
-      </div>
-      <div class="row">
-        <div class="left">2024–25</div>
-        <div class="right"><h4>Professional Development Coordinator — Kaibigang Pilipino</h4><p>4+ workshops; launched mentorship program (260+ matches).</p></div>
-      </div>
-      <div class="row">
-        <div class="left">2024–25</div>
-        <div class="right"><h4>Research Lab Assistant — UC San Diego</h4><p>Behavioral/experimental econ; regression; visualization; research ops.</p></div>
-      </div>
-      <div class="row">
-        <div class="left">2024</div>
-        <div class="right"><h4>Media Director — Musicians’ Club</h4><p>Produced 11+ videos; new social strategy; +25% engagement.</p></div>
-      </div>
-    </div>
+<div class="timeline reveal">
+  <!-- 2025+ -->
+  <div class="row">
+    <div class="left">Aug 2025 – Present</div>
+    <div class="right"><h4>Consultant — UCSD D1 Men’s Basketball (Eclipse Analytics)</h4><p>Built analytics for lineup efficiency and player trends; delivered decision-ready insights to coaching staff.</p></div>
+  </div>
+  <div class="row">
+    <div class="left">Jun 2025 – Present</div>
+    <div class="right"><h4>Internal Audit Intern — Realty Income</h4><p>SOX testing for 10+ ITGCs and 8+ ELCs; 4+ walkthroughs with KPMG; 50+ key report/QC checks; AuditBoard, DataSnipper, Power BI.</p></div>
+  </div>
+  <div class="row">
+    <div class="left">May 2025 – Present</div>
+    <div class="right"><h4>President, Academic Retention — KP STAR (SPACES)</h4><p>Led 10+ board; designed multi‑quarter programming; launched 260+ match mentorship model; partnerships with campus orgs and faculty.</p></div>
+  </div>
+  <div class="row">
+    <div class="left">Apr 2025 – Present</div>
+    <div class="right"><h4>Research Analyst — Eclipse Analytics @ UC San Diego</h4><p>Researched performance indicators, built data pipelines/visuals, and supported scouting deliverables.</p></div>
+  </div>
+  <div class="row">
+    <div class="left">Apr 2025 – Present</div>
+    <div class="right"><h4>Internal Finance & Operations Manager — Out The Archive (OTA)</h4><p>Budgeting, expense tracking, and logistics for showcases supporting 90+ student artists; aligned planning to program goals.</p></div>
+  </div>
+  <!-- 2024–2025 -->
+  <div class="row">
+    <div class="left">Nov 2024 – Present</div>
+    <div class="right"><h4>Worker Bee — Music Hive</h4><p>Supported community music operations and events; contributed to planning and execution.</p></div>
+  </div>
+  <div class="row">
+    <div class="left">Feb 2025 – May 2025</div>
+    <div class="right"><h4>Finance & Fundraising Intern — Beta Alpha Psi</h4><p>Supported budgeting, fundraising, and stakeholder coordination; contributed to member programming.</p></div>
+  </div>
+  <div class="row">
+    <div class="left">Oct 2024 – Feb 2025</div>
+    <div class="right"><h4>Active Member — Beta Alpha Psi</h4><p>Participated in professional development and service events; exposed to accounting/finance practices.</p></div>
+  </div>
+  <div class="row">
+    <div class="left">Oct 2024 – May 2025</div>
+    <div class="right"><h4>Economics/Data Analysis Research Lab Assistant — UC San Diego</h4><p>Experimental/behavioral economics research; regression & visualization; enforced data quality controls (+15% accuracy).</p></div>
+  </div>
+  <div class="row">
+    <div class="left">Oct 2024 – May 2025</div>
+    <div class="right"><h4>Brand Ambassador — Airbuds Widget</h4><p>Led student‑market activations and outreach; gathered product feedback to inform growth.</p></div>
+  </div>
+  <div class="row">
+    <div class="left">Aug 2024 – Jan 2025</div>
+    <div class="right"><h4>Brand Ambassador — Guayakí Yerba Mate</h4><p>Launched 5+ campaigns; +10% engagement and +15% brand recall; contributed to ROI analysis.</p></div>
+  </div>
+  <div class="row">
+    <div class="left">May 2024 – Jun 2025</div>
+    <div class="right"><h4>Professional Development Coordinator — Kaibigang Pilipino</h4><p>Designed 4+ workshops (résumé, LinkedIn, networking); increased participation by 30%; built mentorship pipeline.</p></div>
+  </div>
+  <div class="row">
+    <div class="left">May 2024 – Nov 2024</div>
+    <div class="right"><h4>Media Director — Musicians’ Club at UC San Diego</h4><p>Produced 11+ videos; developed social strategy; +25% engagement and retention.</p></div>
+  </div>
+  <div class="row">
+    <div class="left">Oct 2023 – Oct 2024</div>
+    <div class="right"><h4>Freshperson Executive — Kaibigang Pilipino</h4><p>Planned 10+ cultural/academic/social events; kickoff engaged 90+; supported KP STAR mission and 260+ participant mentorship cohort.</p></div>
+  </div>
+</div>
+</div>
   </section>
-
 
   <!-- CONTACT -->
   <section id="contact" class="section">
@@ -259,30 +304,37 @@
         </div>
       </form>
     </div>
-  
-  <!-- CONNECT (separate section) -->
+  </section>
+
+  <!-- CONNECT -->
   <section id="connect" class="section connect-section">
     <div class="section-head"><h2>Connect</h2></div>
     <div class="connect-inner">
       <div class="btn-group btn-group--stack">
-        
         <button class="btn btn-pill btn-primary" id="email-copy-2" data-email="johnpaultalag@gmail.com"><span>Email</span></button>
         <a class="btn btn-pill btn-ghost" target="_blank" rel="noopener" href="https://www.linkedin.com/in/johnpaultalag"><span>LinkedIn</span></a>
-        <a class="btn btn-pill btn-ghost" target="_blank" rel="noopener" href="https://github.com/"><span>GitHub</span></a>
-        <a class="btn btn-pill btn-ghost" target="_blank" rel="noopener" href="resume.pdf"><span>Resume</span></a>
+        <a class="btn btn-pill btn-ghost" target="_blank" rel="noopener" href="https://github.com/junpol"><span>GitHub</span></a>
+        <a class="btn btn-pill btn-ghost" target="_blank" rel="noopener" href="resume.pdf" download><span>Resume</span></a>
       </div>
       <p class="small muted center">Prefer email? I’ll get back within a day.</p>
     </div>
   </section>
 
-
-  <!-- MODALS (CAI Stories) -->
+  
+<dialog id="work_star" class="modal"><form method="dialog">
+  <h3>President, Academic Retention — Kaibigang Pilipino STAR Program</h3>
+  <p><strong>Scope:</strong> Lead a 10+ member cross-functional board serving 250+ students to improve academic retention, professional growth, and cultural belonging.</p>
+  <p><strong>What I built:</strong> Multi-quarter programming that combined academic support, career workshops, and wellness — plus the first Career Mentorship Program with 260+ student–alumni matches.</p>
+  <p><strong>How it works:</strong> Standardized event frameworks, clear documentation, and partner pipelines with campus centers, orgs, and faculty — so the program scales and outlasts any single team.</p>
+  <p><strong>Impact:</strong> Higher participation and continuity across cohorts; a replicable model other groups can adopt.</p>
+  <menu><button>Close</button></menu>
+</form></dialog>
+<!-- MODALS -->
   <dialog id="work1" class="modal"><form method="dialog">
     <h3>Internal Audit — Realty Income</h3>
     <p><strong>Challenge:</strong> Ensure reliability of controls and reporting for a large public REIT.</p>
     <p><strong>Approach:</strong> Tested 10+ ITGCs & 8+ ELCs, ran SOX walkthroughs with KPMG, accelerated evidence with AuditBoard/DataSnipper & Power BI.</p>
     <p><strong>Impact:</strong> Improved documentation quality and testing efficiency; 50+ key report/QCC checks validated accuracy.</p>
-    
     <details class="evidence"><summary>Evidence & artifacts</summary>
       <ul>
         <li>Process docs & testing notes (redacted samples)</li>
@@ -298,7 +350,6 @@
     <p><strong>Challenge:</strong> Understand how language framing influences student persistence.</p>
     <p><strong>Approach:</strong> Designed randomized experiment (N=170+); analyzed with Stata/Python; enforced QC.</p>
     <p><strong>Impact:</strong> Actionable recommendations for education programs; improved data accuracy by 15%.</p>
-    
     <details class="evidence"><summary>Evidence & artifacts</summary>
       <ul>
         <li>Process docs & testing notes (redacted samples)</li>
@@ -314,7 +365,6 @@
     <p><strong>Challenge:</strong> Boost professional development and retention for Pilipino students at UCSD.</p>
     <p><strong>Approach:</strong> Built workshop series and launched a structured mentorship pipeline pairing underclassmen with alumni.</p>
     <p><strong>Impact:</strong> Increased participation; 260+ mentorship matches; replicable model for future cohorts.</p>
-    
     <details class="evidence"><summary>Evidence & artifacts</summary>
       <ul>
         <li>Process docs & testing notes (redacted samples)</li>
@@ -330,7 +380,6 @@
     <p><strong>Challenge:</strong> Provide coaches with decision-ready insights.</p>
     <p><strong>Approach:</strong> Built Python/Excel dashboards; analyzed lineup efficiency & in-game trends.</p>
     <p><strong>Impact:</strong> Clear scouting frameworks; faster tactical decisions & recruiting signals.</p>
-    
     <details class="evidence"><summary>Evidence & artifacts</summary>
       <ul>
         <li>Process docs & testing notes (redacted samples)</li>
@@ -349,37 +398,29 @@
   </div>
 
   <button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+
   <div class="sticky-cta" aria-label="Quick actions">
     <a class="btn btn-pill btn-primary" href="mailto:johnpaultalag@gmail.com"><span>Email</span></a>
     <a class="btn btn-pill btn-ghost" target="_blank" rel="noopener" href="https://www.linkedin.com/in/johnpaultalag"><span>LinkedIn</span></a>
   </div>
-  <footer class="footer"><div class="footer-inner">© <span id="year"></span> JPT</div></footer>
-  <script src="script.js"></script>
 
   <!-- Command Palette -->
   <div id="cmdk" aria-hidden="true">
-    <div class="cmdk-backdrop" tabindex="-1"></div>
-    <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="Command palette">
-      <input id="cmdk-input" type="text" placeholder="Type a command or search…" aria-label="Command input" autocomplete="off"/>
-      <ul id="cmdk-list" role="listbox" aria-label="Results"></ul>
-      <div class="cmdk-hint">t: theme · m: menu · g: top · c: contact · ? : help · k: open</div>
+    <div class="cmdk-backdrop"></div>
+    <div class="cmdk-panel" role="dialog" aria-modal="true" aria-labelledby="cmdk-title">
+      <input id="cmdk-input" type="text" placeholder="Type to search… (press K)" autocomplete="off"/>
+      <ul id="cmdk-list" role="listbox" aria-label="Commands"></ul>
+      <div class="cmdk-hint">t: theme • m: menu • g: top • c: contact • K: open palette</div>
     </div>
   </div>
 
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>© <span id="year"></span> John Paul Talag</span>
+      <span style="float:right">Theme & accent memory enabled</span>
+    </div>
+  </footer>
 
-  <!-- AMA Modal -->
-  <dialog id="amaModal" class="modal">
-    <form method="dialog">
-      <h3 id="amaTitle">Ask Me Anything — Project</h3>
-      <div id="amaList" class="ama-list" role="list"></div>
-      <div class="modal-actions">
-        <button class="btn btn-pill btn-ghost" value="cancel"><span>Close</span></button>
-      </div>
-    </form>
-  </dialog>
-
-  <!-- AMA Sticky Chip -->
-  <div id="amaChip" class="ama-chip" aria-hidden="true" role="button" aria-label="Questions? Ask Me Anything">Questions?</div>
-
+  <script src="script.js" defer></script>
 </body>
 </html>

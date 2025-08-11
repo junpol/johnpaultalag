@@ -356,3 +356,11 @@ details.evidence[open]{ border-top: 1px dashed var(--line); padding-top: 8px; }
 .exp-scrubber{display:flex;align-items:center;gap:10px;margin:8px 0 2px}
 .exp-scrubber input[type="range"]{width:260px}
 .exp-year{font-variant-numeric:tabular-nums;color:var(--muted);min-width:72px;text-align:right}
+
+/* Smooth accent/theme hint on variable consumers */
+* { transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+html.theme-xfade * { transition: background-color .25s ease, color .25s ease, border-color .25s ease; }
+
+/* Modal base */
+.modal { border: 1px solid var(--line); border-radius: 16px; padding: 16px; background: var(--paper-true); color: var(--ink); max-width: 720px; width: calc(100% - 32px); }
+.modal::backdrop { background: rgba(0,0,0,.35); }

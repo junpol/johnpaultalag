@@ -26,8 +26,10 @@ document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggle
 
 // Accent swatches
 document.querySelectorAll('.swatch').forEach(b=> b.addEventListener('click', ()=>{
-  root.setAttribute('data-accent', b.dataset.accent);
-  localStorage.setItem('accent', b.dataset.accent);
+  withThemeFade(()=>{
+    root.setAttribute('data-accent', b.dataset.accent);
+    localStorage.setItem('accent', b.dataset.accent);
+  });
 }));
 
 // Mobile menu
