@@ -1,5 +1,5 @@
 // Year
-document.getElementById('year').textContent = new Date().getFullYear();
+const _yEl = document.getElementById('year'); if(_yEl) _yEl.textContent = new Date().getFullYear();
 
 // Parallax hero
 const heroBg = document.querySelector('.hero-bg');
@@ -245,7 +245,7 @@ function withThemeFade(fn){
 
 // === Active section nav highlight ===
 (function(){
-  const sections = ['home','about','work','projects','impact','experience','contact','connect'];
+  const sections = ['home','about','work','projects','impact','experience','contact',];
   const links = Array.from(document.querySelectorAll('.links a'));
   function update(){
     let current = 'home';
@@ -308,7 +308,6 @@ function withThemeFade(fn){
     {label:'Open LinkedIn', k:'↗', fn:()=>window.open('https://www.linkedin.com/in/johnpaultalag','_blank')},
     {label:'Open GitHub', k:'↗', fn:()=>window.open('https://github.com/junpol','_blank')},
     {label:'Download resume', k:'⬇', fn:()=>window.open('resume.pdf','_blank')},
-    {label:'Open Connect', k:'↵', fn:()=>document.getElementById('connect')?.scrollIntoView({behavior:'smooth'})},
     {label:'Back to top', k:'g', fn:()=>window.scrollTo({top:0, behavior:'smooth'})}
   ];
 
@@ -498,5 +497,155 @@ function withThemeFade(fn){
     amaChip.onclick = hasVisible ? ()=> openAMA(top[0]) : null;
   }, {rootMargin:'-20% 0px -20% 0px', threshold:[0,0.25,0.5,0.75,1]});
   cards.forEach(c => io.observe(c));
+})();
+
+
+
+
+// A11y additions: keyboard activation for cards and tiles
+document.querySelectorAll('.card[role="button"], .tile[role="button"]').forEach(el=>{
+  el.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      const modalId = el.getAttribute('data-modal');
+      if(modalId){ document.getElementById(modalId)?.showModal(); }
+      const gal = el.getAttribute('data-gallery');
+      if(gal){ openLightbox(gal, 0); }
+    }
+  });
+});
+
+// Reduced motion guard
+const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(prefersReduced){
+  // Disable tilt handlers if present
+  document.querySelectorAll('.tilt').forEach(el=>{
+    el.onmousemove = null;
+    el.onmouseleave = null;
+  });
+  if(heroBg){ heroBg.style.transform = ''; window.removeEventListener('scroll', ()=>{}); }
+}
+
+// Dialog focus management
+document.querySelectorAll('dialog[aria-modal="true"]').forEach(dlg=>{
+  dlg.addEventListener('close', ()=>{
+    const opener = document.querySelector('[data-modal="'+ dlg.id +'"]');
+    opener?.focus();
+  });
+  dlg.addEventListener('cancel', ()=>{
+    const opener = document.querySelector('[data-modal="'+ dlg.id +'"]');
+    opener?.focus();
+  });
+  dlg.addEventListener('show', ()=>{
+    dlg.querySelector('button,[href],[tabindex="0"]')?.focus();
+  });
+});
+
+
+
+// Interactive Data Demo Chart.js
+document.addEventListener('DOMContentLoaded', ()=>{
+  const ctx = document.getElementById('demoChart')?.getContext('2d');
+  if(ctx){
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Before', 'After'],
+        datasets: [{
+          label: 'Data Accuracy (%)',
+          data: [78, 93],
+          backgroundColor: ['#ccc', '#4F46E5']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          title: { display: true, text: 'Cleaner Data Impact' }
+        },
+        scales: {
+          y: { beginAtZero: true, max: 100 }
+        }
+      }
+    });
+  }
+});
+
+
+
+// HERO BG FADE-IN
+window.addEventListener('load', ()=>{ try{ document.querySelector('.hero-bg')?.classList.add('show'); }catch(e){} });
+
+// Footer last updated
+const lu = document.getElementById('lastUpdated');
+if(lu){
+  const d = new Date();
+  lu.textContent = d.toLocaleDateString(undefined, { year: 'numeric', month: 'short' });
+}
+
+// Hero playful animation (complexity -> clarity)
+const anim = document.querySelector('.hero-animation');
+if(anim){
+  anim.innerHTML = '<div class="dots"></div>';
+  setTimeout(()=>{
+    anim.innerHTML = '<div class="checkmark">✓</div>';
+  }, 1800);
+}
+
+// Modal close handlers (× button + backdrop)
+document.querySelectorAll('.modal').forEach(dlg=>{
+  dlg.querySelector('.modal-close')?.addEventListener('click', ()=> dlg.close());
+  dlg.addEventListener('keydown', (e)=>{ if(e.key==='Escape') dlg.close(); });
+  dlg.addEventListener('click', (e)=>{ if(e.target === dlg) dlg.close(); });
+});
+
+
+// === Robust Modals (with fallback) ===
+(function(){
+  function openDlgById(id){
+    const dlg = document.getElementById(id);
+    if(!dlg) return;
+    try{
+      if(typeof dlg.showModal === 'function'){ dlg.showModal(); }
+      else {
+        dlg.setAttribute('open','');
+        dlg.setAttribute('aria-hidden','false');
+        document.body.classList.add('modal-open');
+      }
+    }catch{
+      dlg.setAttribute('open','');
+      dlg.setAttribute('aria-hidden','false');
+      document.body.classList.add('modal-open');
+    }
+  }
+  function closeDlg(dlg){
+    if(!dlg) return;
+    try{ if(typeof dlg.close === 'function') dlg.close(); }catch{}
+    dlg.removeAttribute('open');
+    dlg.setAttribute('aria-hidden','true');
+    document.body.classList.remove('modal-open');
+  }
+
+  // Open on click or Enter/Space
+  document.querySelectorAll('[data-modal]').forEach(card=>{
+    const id = card.dataset.modal;
+    card.addEventListener('click', ()=> openDlgById(id));
+    card.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        openDlgById(id);
+      }
+    });
+  });
+
+  // Close handlers
+  document.querySelectorAll('.modal').forEach(dlg=>{
+    // close button
+    dlg.querySelector('.modal-close')?.addEventListener('click', ()=> closeDlg(dlg));
+    // backdrop / click-out
+    dlg.addEventListener('click', (e)=>{ if(e.target === dlg) closeDlg(dlg); });
+    // ESC
+    dlg.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDlg(dlg); });
+  });
 })();
 
