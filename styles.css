@@ -450,3 +450,56 @@ body.modal-open::after{
 .into-media{ aspect-ratio: 16 / 10; background: linear-gradient(135deg, rgba(0,0,0,0.08), rgba(0,0,0,0.02)); }
 .into-meta{ padding: 14px 14px 16px; }
 .into-emoji{ font-size: 18px; margin-right: 6px; }
+
+
+/* === Clean Ledger — audit-forward visual system (CSS-only) === */
+/* Tokens */
+:root{
+  --radius-sm:10px; --radius:16px; --radius-lg:22px;
+  --border-hair:1px solid var(--line);
+  --shadow-card: 0 6px 18px rgba(0,0,0,.06);
+  --heading-track:-.01em;
+  --label: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
+
+/* Section headings: signature dot */
+.section-head h2{
+  letter-spacing: var(--heading-track);
+  position: relative; padding-left: 14px;
+}
+.section-head h2::before{
+  content:""; position:absolute; left:0; top:0.45em; width:8px; height:8px;
+  border-radius:50%; background: var(--brand);
+}
+
+/* Cards / tiles / stats / modals: hairline + gentle depth */
+.cards .card,
+.tile,
+.stat,
+.modal-inner{
+  border: var(--border-hair);
+  border-radius: var(--radius);
+  background: var(--paper-true);
+  box-shadow: var(--shadow-card);
+}
+
+/* Labels: system vibe */
+.eyebrow, .badges span, .tags span, small, kbd{
+  font-family: var(--label);
+  letter-spacing: .02em;
+}
+
+/* Buttons: pill, crisp focus */
+.btn{ border-radius: 999px; }
+.btn-primary{ background: var(--brand); color: var(--brand-ink); }
+.btn:focus-visible{ outline: none; box-shadow: 0 0 0 3px var(--focus); }
+
+/* Spacing rhythm & separators */
+.section{ padding: 96px 20px; }
+.section + .section{ border-top: var(--border-hair); }
+
+/* Keep hero plain (no patterns/motion), reinforce subtle seam */
+.hero{ background: var(--paper-true); border-bottom: var(--border-hair); }
+.hero::before, .hero-bg::before, .hero-bg::after{ content: none !important; }
+.hero-bg{ inset: 0 !important; background: none !important; filter: none !important; mask-image: none !important; opacity: 1 !important; transition: none !important; }
+
