@@ -278,7 +278,7 @@ function withThemeFade(fn){
     if(e.key === 'm'){ e.preventDefault(); document.getElementById('menu-toggle')?.click(); }
     if(e.key === 'g'){ e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}); }
     if(e.key.toLowerCase() === 'c'){ e.preventDefault(); document.getElementById('contact')?.scrollIntoView({behavior:'smooth'}); }
-    if(e.key === '?'){ e.preventDefault(); toast('Shortcuts — t: theme • m: menu • g: top • c: contact'); }
+    if(false){}
   });
 })();
 
@@ -647,5 +647,43 @@ document.querySelectorAll('.modal').forEach(dlg=>{
     // ESC
     dlg.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDlg(dlg); });
   });
+})();
+
+
+
+// === Scrollspy ===
+(function(){
+  try{
+    const links = Array.from(document.querySelectorAll('#site-menu a[href^="#"]'));
+    if(!links.length) return;
+    const map = new Map(links.map(a=> [a.getAttribute('href').slice(1), a]));
+    const sections = Array.from(document.querySelectorAll('section[id]')).filter(s=> map.has(s.id));
+    const setActive = (id)=>{
+      map.forEach(a=>{ a.removeAttribute('aria-current'); a.classList.remove('active'); });
+      const a = map.get(id); if(a){ a.setAttribute('aria-current','true'); a.classList.add('active'); }
+    };
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ setActive(en.target.id); } });
+    }, {root:null, rootMargin: '-30% 0px -65% 0px', threshold: 0.01});
+    sections.forEach(s=> io.observe(s));
+    window.addEventListener('load', ()=>{
+      const cur = sections.find(s=> s.getBoundingClientRect().top >= 0) || sections[0];
+      if(cur) setActive(cur.id);
+    });
+  }catch(e){}
+})();
+
+// === Shortcuts overlay ('?') ===
+(function(){
+  try{
+    const dlg = document.getElementById('shortcuts');
+    if(!dlg) return;
+    dlg.querySelector('.modal-close')?.addEventListener('click', ()=> dlg.close());
+    document.addEventListener('keydown', (e)=>{
+      const tag = (e.target?.tagName||'').toLowerCase();
+      if(tag === 'input' || tag === 'textarea') return;
+      if(e.key === '?'){ e.preventDefault(); if(typeof dlg.showModal === 'function'){ dlg.showModal(); } else { dlg.setAttribute('open',''); } }
+    });
+  }catch(e){}
 })();
 
