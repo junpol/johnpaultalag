@@ -687,3 +687,97 @@ document.querySelectorAll('.modal').forEach(dlg=>{
   }catch(e){}
 })();
 
+
+
+// Intro overlay logic (shows once per session) — type & delete version
+(function(){
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const overlay = document.getElementById('intro-overlay');
+  if(!overlay) return;
+
+  const KEY = 'introShown';
+  if(sessionStorage.getItem(KEY) === '1' || prefersReduced){
+    overlay.setAttribute('hidden','');
+    return;
+  }
+
+  const el = document.getElementById('intro-rotator');
+  const skipBtn = document.getElementById('intro-skip');
+
+  const words = [
+  'stories backed by numbers',
+  'small steps, steady progress',
+  'helping teams get unstuck',
+  'playing guitar live',
+  'watching the Lakers',
+  'leaving things better'
+];
+
+  const TYPE_MS = 40;
+  const DELETE_MS = 28;
+  const HOLD_MS = 700;
+
+  let stop = false;
+  const sleep = (ms)=> new Promise(r => setTimeout(r, ms));
+
+  function finishImmediate(){
+    stop = true;
+    overlay.classList.add('fade-out');
+    setTimeout(() => overlay.setAttribute('hidden',''), 280);
+    sessionStorage.setItem(KEY, '1');
+  }
+
+  async function revealThenFinish(){
+    if (stop) return;
+    overlay.classList.add('reveal');
+    await new Promise(r => setTimeout(r, 650));
+    if (stop) return;
+    overlay.classList.add('fade-out');
+    await new Promise(r => setTimeout(r, 280));
+    overlay.setAttribute('hidden','');
+    sessionStorage.setItem(KEY, '1');
+  }
+
+  if (skipBtn) skipBtn.addEventListener('click', finishImmediate);
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') finishImmediate(); }, {once:true});
+
+  async function typeWord(text){
+    el.textContent = '';
+    for (let i = 0; i < text.length && !stop; i++){
+      el.textContent += text[i];
+      if (typeof fitIntroLine === 'function') fitIntroLine();
+      await sleep(TYPE_MS);
+    }
+    await sleep(HOLD_MS);
+    for (let i = text.length; i > 0 && !stop; i--){
+      el.textContent = text.slice(0, i - 1);
+      await sleep(DELETE_MS);
+    }
+  }
+
+  (async function run(){
+    for (const word of words){
+      if (stop) break;
+      await typeWord(word);
+    }
+    if (!stop) await revealThenFinish();
+  })();
+})();
+
+
+// Ensure the single-line intro fits without wrapping by nudging font-size down if needed
+function fitIntroLine(){
+  const line = document.querySelector('.intro-line');
+  const wrap = document.querySelector('.intro-inner');
+  if(!line || !wrap) return;
+  // reset to CSS-defined size, then reduce if needed
+  line.style.fontSize = '';
+  const maxWidth = wrap.clientWidth * 0.96;
+  let size = parseFloat(getComputedStyle(line).fontSize);
+  let attempts = 24;
+  while(line.scrollWidth > maxWidth && attempts-- > 0){
+    size *= 0.95; // reduce 5%
+    line.style.fontSize = size + 'px';
+  }
+}
+window.addEventListener('resize', fitIntroLine);

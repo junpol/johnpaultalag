@@ -33,8 +33,17 @@
   "affiliation":{"@type":"CollegeOrUniversity","name":"UC San Diego"}
 }
 </script>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body>
+\1
+<!-- Intro Overlay -->
+  <div id="intro-overlay" class="intro-overlay" aria-hidden="true">
+    <div class="intro-inner" role="dialog" aria-label="Intro">
+      <p class="intro-line">Hello, my name is <strong>John Paul</strong> and I like: <span id="intro-rotator" class="intro-rotator" aria-live="polite"></span></p>
+      <button id="intro-skip" class="intro-skip" type="button" aria-label="Skip intro">Skip</button>
+    </div>
+  </div>
+
   <a class="skip" href="#about">Skip to content</a>
   <div id="toasts" aria-live="polite" aria-atomic="true"></div>
 
