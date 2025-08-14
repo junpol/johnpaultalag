@@ -8,29 +8,10 @@ window.addEventListener('scroll', ()=>{
   if(heroBg) heroBg.style.transform = `translateY(${y}px)`;
 }, {passive:true});
 
-// Theme & accent
+// Theme & accent (fixed)
 const root = document.documentElement;
-const savedTheme = localStorage.getItem('theme'); if(savedTheme) root.setAttribute('data-theme', savedTheme);
-const savedAccent = localStorage.getItem('accent'); if(savedAccent) root.setAttribute('data-accent', savedAccent);
-
-// Dual theme toggles (desktop + mobile)
-function toggleTheme(){
-  withThemeFade(()=>{
-  const cur = root.getAttribute('data-theme') || 'light';
-  const nxt = cur === 'light' ? 'dark' : 'light';
-  root.setAttribute('data-theme', nxt); localStorage.setItem('theme', nxt);
-  });
-}
-document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
-document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggleTheme);
-
-// Accent swatches
-document.querySelectorAll('.swatch').forEach(b=> b.addEventListener('click', ()=>{
-  withThemeFade(()=>{
-    root.setAttribute('data-accent', b.dataset.accent);
-    localStorage.setItem('accent', b.dataset.accent);
-  });
-}));
+root.setAttribute('data-theme','dark');
+root.setAttribute('data-accent','coral');
 
 // Mobile menu
 const menuBtn = document.getElementById('menu-toggle');
@@ -269,12 +250,12 @@ function withThemeFade(fn){
 })();
 
 // === Keyboard shortcuts ===
-// t: theme toggle, m: mobile menu, g: go top, c: contact, ?: help
+// m: mobile menu, g: go top, c: contact, ?: help
 (function(){
   function isTyping(){ return ['INPUT','TEXTAREA'].includes(document.activeElement?.tagName); }
   document.addEventListener('keydown', (e)=>{
     if(isTyping() || e.metaKey || e.ctrlKey || e.altKey) return;
-    if(e.key === 't'){ e.preventDefault(); document.getElementById('theme-toggle')?.click(); }
+    /* theme toggle removed */
     if(e.key === 'm'){ e.preventDefault(); document.getElementById('menu-toggle')?.click(); }
     if(e.key === 'g'){ e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}); }
     if(e.key.toLowerCase() === 'c'){ e.preventDefault(); document.getElementById('contact')?.scrollIntoView({behavior:'smooth'}); }
@@ -298,9 +279,8 @@ function withThemeFade(fn){
     {label:'Go: Impact', k:'↵', fn:()=>document.getElementById('impact')?.scrollIntoView({behavior:'smooth'})},
     {label:'Go: Experience', k:'↵', fn:()=>document.getElementById('experience')?.scrollIntoView({behavior:'smooth'})},
     {label:'Go: Contact', k:'↵', fn:()=>document.getElementById('contact')?.scrollIntoView({behavior:'smooth'})},
-    {label:'Toggle theme', k:'t', fn:()=>document.getElementById('theme-toggle')?.click()},
     {label:'Switch accent', k:'', fn:()=>{
-      const acc=['graphite','coral','indigo','emerald'];
+      const acc=['intro','graphite','coral','indigo','emerald'];
       const cur=root.getAttribute('data-accent')||acc[0];
       const i=(acc.indexOf(cur)+1)%acc.length; root.setAttribute('data-accent',acc[i]); localStorage.setItem('accent',acc[i]);
     }},
@@ -781,3 +761,106 @@ function fitIntroLine(){
   }
 }
 window.addEventListener('resize', fitIntroLine);
+
+
+// Utility: copy email to clipboard (used in command palette)
+function copyEmailToClipboard() {
+  const email = "johnpaultalag@gmail.com";
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(email).then(() => {
+      console.log("Email copied to clipboard");
+    }).catch(() => { fallbackCopyTextToClipboard(email); });
+  } else {
+    fallbackCopyTextToClipboard(email);
+  }
+}
+function fallbackCopyTextToClipboard(text) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try { document.execCommand('copy'); } catch(e) { console.warn('Copy failed', e); }
+  document.body.removeChild(textArea);
+}
+
+function openCommandPalette() {
+  const dlg = document.getElementById("command-palette");
+  if (dlg && typeof dlg.showModal === "function") {
+    if (!dlg.open) dlg.showModal();
+  }
+}
+
+document.addEventListener("keydown", (e) => {
+  const k = e.key.toLowerCase();
+  const isCmdK = (k === "k") && (e.metaKey || e.ctrlKey);
+  if (isCmdK) {
+    e.preventDefault();
+    if (typeof openCommandPalette === "function") {
+      openCommandPalette();
+    } else {
+      const dlg = document.getElementById("command-palette");
+      if (dlg && typeof dlg.showModal === "function") {
+        if (!dlg.open) dlg.showModal();
+      }
+    }
+  }
+});
+
+/* Smooth anchor scroll respecting prefers-reduced-motion */
+(function(){
+  try {
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var id = a.getAttribute('href');
+        if(!id || id.length <= 1) return;
+        var target = document.querySelector(id);
+        if(!target) return;
+        e.preventDefault();
+        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+      });
+    });
+  } catch(_) {}
+})();
+
+/* Reveal-on-scroll helper */
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  try {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('reveal-in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } catch(_) {}
+})();
+
+/* Theme & accent persistence */
+(function(){
+  try {
+    var root = document.documentElement;
+    var savedTheme = localStorage.getItem('theme') || root.getAttribute('data-theme') || 'dark';
+    var savedAccent = localStorage.getItem('accent') || root.getAttribute('data-accent') || 'coral';
+    root.setAttribute('data-theme', savedTheme);
+    root.setAttribute('data-accent', savedAccent);
+    window.setTheme = function(t){ root.setAttribute('data-theme', t); localStorage.setItem('theme', t); };
+    window.setAccent = function(a){ root.setAttribute('data-accent', a); localStorage.setItem('accent', a); };
+  } catch(_) {}
+})();
+
+/* Example: toggle menu-open on body for scroll lock (wire to your existing menu button) */
+(function(){
+  try {
+    var menuBtn = document.querySelector('[data-menu-toggle]');
+    var nav = document.querySelector('nav');
+    if(menuBtn && nav){
+      menuBtn.addEventListener('click', function(){
+        var open = document.body.classList.toggle('menu-open');
+        if(open){ menuBtn.setAttribute('aria-expanded','true'); nav.setAttribute('data-open',''); menuBtn.focus(); }
+        else { menuBtn.setAttribute('aria-expanded','false'); nav.removeAttribute('data-open'); }
+      });
+    }
+  } catch(_) {}
+})();
