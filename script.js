@@ -527,7 +527,7 @@ document.querySelectorAll('dialog[aria-modal="true"]').forEach(dlg=>{
 document.addEventListener('DOMContentLoaded', ()=>{
   const ctx = document.getElementById('demoChart')?.getContext('2d');
   if(ctx){
-    new Chart(ctx, {
+    if (window.Chart) new Chart(ctx, {
       type: 'bar',
       data: {
         labels: ['Before', 'After'],
@@ -864,3 +864,6 @@ document.addEventListener("keydown", (e) => {
     }
   } catch(_) {}
 })();
+
+
+

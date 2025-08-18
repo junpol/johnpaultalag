@@ -1,0 +1,32 @@
+--- index.html (old)
++++ index.html (new)
+@@ -3,6 +3,7 @@
+ 
+ <html data-accent="coral" data-theme="dark" lang="en">
+ <head>
++  <meta name="description" content="John Paul Talag – Business Economics at UCSD. Internal Audit, analytics, and process improvement portfolio.">
+ <meta charset="utf-8"/>
+ <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+ <title>John Paul Talag — Portfolio</title>
+@@ -36,6 +37,7 @@
+ </script>
+ 
+ <noscript><style>#intro-overlay{display:none!important}</style></noscript>
++  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ </head>
+ <body>
+ <!-- Intro Overlay -->
+
+
+--- script.js (old)
++++ script.js (new)
+@@ -527,7 +527,7 @@
+ document.addEventListener('DOMContentLoaded', ()=>{
+   const ctx = document.getElementById('demoChart')?.getContext('2d');
+   if(ctx){
+-    new Chart(ctx, {
++    if (window.Chart) new Chart(ctx, {
+       type: 'bar',
+       data: {
+         labels: ['Before', 'After'],
+
