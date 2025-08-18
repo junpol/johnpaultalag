@@ -4,7 +4,7 @@ const _yEl = document.getElementById('year'); if(_yEl) _yEl.textContent = new Da
 // Parallax hero
 const heroBg = document.querySelector('.hero-bg');
 window.addEventListener('scroll', ()=>{
-  const y = window.scrollY * 0.15;
+  const y = Math.min(window.scrollY * 0.15, 60);
   if(heroBg) heroBg.style.transform = `translateY(${y}px)`;
 }, {passive:true});
 
@@ -527,7 +527,7 @@ document.querySelectorAll('dialog[aria-modal="true"]').forEach(dlg=>{
 document.addEventListener('DOMContentLoaded', ()=>{
   const ctx = document.getElementById('demoChart')?.getContext('2d');
   if(ctx){
-    if (window.Chart) new Chart(ctx, {
+    new Chart(ctx, {
       type: 'bar',
       data: {
         labels: ['Before', 'After'],
@@ -866,4 +866,172 @@ document.addEventListener("keydown", (e) => {
 })();
 
 
+
+
+/* === Custom Cursor: Accent ring + dot (ring only on interactive) === */
+(function(){
+  try {
+    var finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!finePointer) return;
+
+    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Create elements
+    var ring = document.createElement('div'); ring.className = 'cursor';
+    var dot  = document.createElement('div'); dot.className  = 'cursor__dot';
+    document.body.appendChild(ring); document.body.appendChild(dot);
+
+    // Position state
+    var tx = window.innerWidth/2, ty = window.innerHeight/2;
+    var x = tx, y = ty;
+
+    function lerp(a,b,t){ return a + (b-a)*t; }
+
+    function setDot(x, y){
+      dot.style.transform = 'translate('+x+'px,'+y+'px) translate(-50%,-50%)';
+    }
+    function setRingImmediate(x, y){
+      ring.style.transform = 'translate('+x+'px,'+y+'px) translate(-50%,-50%)';
+    }
+
+    // Move handlers
+    function onMove(e){
+      tx = e.clientX; ty = e.clientY;
+      setDot(tx, ty);
+      if (prefersReduced) { setRingImmediate(tx, ty); }
+    }
+    document.addEventListener('mousemove', onMove, { passive: true });
+
+    // Animation loop for smooth ring follow (skipped if reduced motion)
+    if (!prefersReduced){
+      (function tick(){
+        x = lerp(x, tx, 0.18);
+        y = lerp(y, ty, 0.18);
+        setRingImmediate(x, y);
+        requestAnimationFrame(tick);
+      })();
+    } else {
+      setDot(tx, ty); setRingImmediate(tx, ty);
+    }
+
+    // Show ring only over interactive targets
+    var hoverSel = 'a, button, .btn, [role=\"button\"], .card, .impact-card, .into-card';
+    function inInteractive(el){ return !!(el && (el.closest && el.closest(hoverSel))); }
+
+    document.addEventListener('pointerover', function(e){
+      if (inInteractive(e.target)) { ring.classList.add('cursor--visible','cursor--hover'); }
+    }, { passive: true });
+    document.addEventListener('pointerout', function(e){
+      if (inInteractive(e.target)) { ring.classList.remove('cursor--hover'); ring.classList.remove('cursor--visible'); }
+    }, { passive: true });
+
+    // Press feedback
+    document.addEventListener('mousedown', function(){ ring.classList.add('cursor--active'); }, { passive: true });
+    document.addEventListener('mouseup',   function(){ ring.classList.remove('cursor--active'); }, { passive: true });
+
+    // Hide custom cursor over text inputs (native I-beam)
+    var textSel = 'input, textarea, select, [contenteditable=\"true\"]';
+    function toggleOverText(el, on){
+      if (!el) return;
+      ring.style.opacity = on ? 0 : '';
+      dot.style.opacity  = on ? 0 : 1;
+      document.documentElement.style.cursor = on ? 'text' : 'none';
+    }
+    document.addEventListener('pointerover', function(e){ toggleOverText(e.target && e.target.closest(textSel), true); }, { passive: true });
+    document.addEventListener('pointerout',  function(e){ toggleOverText(e.target && e.target.closest(textSel), false); }, { passive: true });
+
+    // Hide when leaving the doc
+    document.addEventListener('mouseleave', function(){ ring.style.opacity = 0; dot.style.opacity = 0; }, { passive: true });
+    document.addEventListener('mouseenter', function(){ ring.style.opacity = ''; dot.style.opacity = 1; }, { passive: true });
+  } catch(e){}
+})();
+
+/* === Custom Cursor: Smiley face (replaces dot) === */
+(function(){
+  try {
+    var finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!finePointer) return;
+
+    // Remove legacy dot if it exists in DOM (old script may still update it, but it's hidden via CSS)
+    var oldDot = document.querySelector('.cursor__dot');
+    if (oldDot && oldDot.parentNode) { /* keep but display none via CSS to avoid errors in old IIFE */ }
+
+    // Build smiley
+    if (!document.querySelector('.cursor__smiley')) {
+      var smile = document.createElement('div');
+      smile.className = 'cursor__smiley';
+      var mouth = document.createElement('i');
+      mouth.className = 'mouth';
+      smile.appendChild(mouth);
+      document.body.appendChild(smile);
+
+      // Track position
+      function setSmile(x, y){
+        smile.style.transform = 'translate('+x+'px,'+y+'px) translate(-50%,-50%)';
+      }
+      // Follow mouse
+      document.addEventListener('mousemove', function(e){ setSmile(e.clientX, e.clientY); }, { passive: true });
+
+      // Hide over text inputs (native I-beam + hide smiley)
+      var textSel = 'input, textarea, select, [contenteditable=\"true\"]';
+      function toggleOverText(el, on){
+        if (!el) return;
+        smile.style.opacity = on ? 0 : 1;
+      }
+      document.addEventListener('pointerover', function(e){ toggleOverText(e.target && e.target.closest(textSel), true); }, { passive: true });
+      document.addEventListener('pointerout',  function(e){ toggleOverText(e.target && e.target.closest(textSel), false); }, { passive: true });
+
+      // Hide when leaving document
+      document.addEventListener('mouseleave', function(){ smile.style.opacity = 0; }, { passive: true });
+      document.addEventListener('mouseenter', function(){ smile.style.opacity = 1; }, { passive: true });
+    }
+  } catch(e){}
+})();
+
+/* === Disable ring at runtime (cleanup) === */
+(function(){
+  try {
+    var r = document.querySelector('.cursor');
+    if (r && r.parentNode) r.parentNode.removeChild(r);
+  } catch(e){}
+})();
+
+
+/* === Smiley Wink on Any Click === */
+(function(){
+  try {
+    var finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!finePointer) return;
+
+    function getSmiley(){
+      return document.querySelector('.cursor__smiley');
+    }
+
+    function ensureAttach(){
+      var sm = getSmiley();
+      if (!sm) { setTimeout(ensureAttach, 60); return; }
+      document.addEventListener('mousedown', function(){
+        sm.classList.add('wink');
+        setTimeout(function(){ sm.classList.remove('wink'); }, 150);
+      }, { passive: true });
+    }
+    ensureAttach();
+  } catch(e){}
+})();
+
+
+
+/* Hide smiley over iframes as well */
+(function(){
+  try {
+    var smile = document.querySelector('.cursor__smiley');
+    if (!smile) return;
+    document.addEventListener('pointerover', function(e){
+      if (e.target && e.target.tagName === 'IFRAME') { smile.style.opacity = 0; }
+    }, { passive: true });
+    document.addEventListener('pointerout', function(e){
+      if (e.target && e.target.tagName === 'IFRAME') { smile.style.opacity = 1; }
+    }, { passive: true });
+  } catch(e){}
+})();
 
