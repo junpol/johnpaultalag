@@ -3,41 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact // About — John Paul Talag</title>
+  <title>contact // about — john paul talag</title>
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
       background: #f5f5f5;
       color: #111;
       line-height: 1.5;
     }
-    .container { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
-    .sidebar { padding: 40px 24px; font-size: 15px; }
-    .name { font-weight: 500; margin-bottom: 24px; }
-    .nav { display: flex; flex-direction: column; gap: 12px; color: #666; }
-    .nav a { text-decoration: none; color: inherit; }
-    .nav a:hover { color: #111; }
-    .nav a.active { color: #111; font-weight: 500; }
-    .content { padding: 40px 60px; max-width: 780px; }
-    h1 { font-size: 22px; font-weight: 600; margin-bottom: 24px; }
-    p { margin-bottom: 16px; color: #222; }
-    a.link { color: #222; text-decoration: none; }
-    a.link:hover { text-decoration: underline; }
-    .contact { margin-top: 24px; }
-    .contact p { margin-bottom: 10px; }
+
+    .container {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      padding: 40px 24px;
+      font-size: 14px;
+    }
+
+    .name {
+      margin-bottom: 28px;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      color: #666;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .nav a.active {
+      color: #111;
+      font-weight: 500;
+    }
+
+    .nav a:hover {
+      color: #111;
+    }
+
+    .content {
+      padding: 40px 60px;
+      max-width: 640px;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 36px;
+    }
+
+    p {
+      margin-bottom: 18px;
+      color: #3a3a3a;
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .contact {
+      margin-top: 28px;
+    }
+
+    .contact p {
+      margin-bottom: 10px;
+    }
+
+    a.link {
+      color: #3a3a3a;
+      text-decoration: none;
+    }
+
+    a.link:hover {
+      text-decoration: underline;
+    }
+
     @media (max-width: 800px) {
-      .container { grid-template-columns: 1fr; }
-      .sidebar { display: flex; justify-content: space-between; gap: 20px; padding: 20px; }
-      .nav { flex-direction: row; flex-wrap: wrap; gap: 14px; }
-      .content { padding: 20px; }
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .content {
+        padding: 20px;
+        max-width: 100%;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="container">
+
     <div class="sidebar">
       <div class="name">john paul talag</div>
+
       <div class="nav">
         <a href="index.html">work</a>
         <a href="projects.html">projects</a>
@@ -51,20 +135,30 @@
       <h1>contact // about</h1>
 
       <p>
-        John Paul Talag is a Business Economics student at UC San Diego focused on
-        finance, data analytics, research, and operations.
+        hello! i’m john paul. i study business economics at uc san diego, with minors in cognitive science and business analytics.
       </p>
 
       <p>
-        He is interested in building systems that make complex work more clear,
-        structured, and impactful. His experience spans internal audit, finance
-        operations, behavioral research, and community-centered leadership.
+        i like working at the intersection of data, systems, and people — helping teams turn complex processes into clear, scalable solutions.
+      </p>
+
+      <p>
+        recently, that’s meant supporting finance operations at a $60b+ reit, managing a $14k budget for retention initiatives serving 600+ students, and building analytics systems for division i basketball.
+      </p>
+
+      <p>
+        i thrive on continuous learning, meaningful connections, and making a positive impact. i’m always open to new opportunities to grow, innovate, and lead.
       </p>
 
       <div class="contact">
         <p>johnpaultalag@gmail.com</p>
-        <p><a class="link" href="https://www.linkedin.com/in/johnpaultalag/" target="_blank">linkedin.com/in/johnpaultalag</a></p>
+        <p>
+          <a class="link" href="https://www.linkedin.com/in/johnpaultalag/" target="_blank">
+            linkedin.com/in/johnpaultalag
+          </a>
+        </p>
       </div>
+
     </div>
   </div>
 </body>
