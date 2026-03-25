@@ -5,32 +5,127 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>John Paul Talag</title>
 <style>
-body{font-family:Helvetica,Arial,sans-serif;background:#f5f5f5;color:#111;margin:0}
-.container{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
-.sidebar{padding:40px 24px}
-.name{margin-bottom:24px}
-.nav{display:flex;flex-direction:column;gap:12px;color:#666}
-.nav a{text-decoration:none;color:inherit}
-.nav a.active{color:#111}
-.content{padding:40px 60px}
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  background:#f5f5f5;
+  color:#111;
+  line-height:1.5;
+}
+
+.container{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  min-height:100vh;
+}
+
+.sidebar{
+  padding:40px 24px;
+  font-size:14px;
+}
+
+.name{
+  margin-bottom:28px;
+}
+
+.name img{
+  width:165px;
+  height:auto;
+  display:block;
+}
+
+.nav{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  color:#666;
+}
+
+.nav a{
+  text-decoration:none;
+  color:inherit;
+}
+
+.nav a.active{
+  color:#111;
+  font-weight:500;
+}
+
+.nav a:hover{
+  color:#111;
+}
+
+.content{
+  padding:40px 60px;
+  max-width:640px;
+}
+
+h1{
+  font-size:20px;
+  font-weight:600;
+  margin-bottom:36px;
+}
+
+p{
+  font-size:15px;
+  line-height:1.65;
+  color:#3a3a3a;
+}
+
+@media (max-width:800px){
+  .container{
+    grid-template-columns:1fr;
+  }
+
+  .sidebar{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    padding:20px;
+  }
+
+  .nav{
+    flex-direction:row;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+
+  .content{
+    padding:20px;
+    max-width:100%;
+  }
+
+  .name{
+    margin-bottom:0;
+  }
+
+  .name img{
+    width:145px;
+  }
+}
 </style>
 </head>
 <body>
 <div class="container">
-<div class="sidebar">
-<div class="name">john paul talag</div>
-<div class="nav">
-<a href="index.html" class="active">work</a>
-<a href="projects.html">projects</a>
-<a href="experience.html">experience</a>
-<a href="about.html">contact // about</a>
-<a href="resume.html">resume</a>
-</div>
-</div>
-<div class="content">
-<h1>work</h1>
-<p>Portfolio home.</p>
-</div>
+  <div class="sidebar">
+    <div class="name">
+      <img src="images/name.png" alt="john paul talag">
+    </div>
+
+    <div class="nav">
+      <a href="index.html" class="active">work</a>
+      <a href="projects.html">projects</a>
+      <a href="experience.html">experience</a>
+      <a href="about.html">contact // about</a>
+      <a href="resume.html">resume</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <h1>work</h1>
+    <p>portfolio home.</p>
+  </div>
 </div>
 </body>
 </html>
