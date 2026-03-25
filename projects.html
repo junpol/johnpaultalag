@@ -1,1 +1,86 @@
-<html><body>Projects page</body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — John Paul Talag</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: #f5f5f5;
+      color: #111;
+      line-height: 1.5;
+    }
+    .container { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+    .sidebar { padding: 40px 24px; font-size: 15px; }
+    .name { font-weight: 500; margin-bottom: 24px; }
+    .nav { display: flex; flex-direction: column; gap: 12px; color: #666; }
+    .nav a { text-decoration: none; color: inherit; }
+    .nav a:hover { color: #111; }
+    .nav a.active { color: #111; font-weight: 500; }
+    .content { padding: 40px 60px; max-width: 860px; }
+    h1 { font-size: 22px; font-weight: 600; margin-bottom: 24px; }
+    .project { margin-bottom: 28px; }
+    .project h2 { font-size: 18px; font-weight: 500; margin-bottom: 6px; }
+    .project p { color: #222; margin-bottom: 10px; max-width: 62ch; }
+    @media (max-width: 800px) {
+      .container { grid-template-columns: 1fr; }
+      .sidebar { display: flex; justify-content: space-between; gap: 20px; padding: 20px; }
+      .nav { flex-direction: row; flex-wrap: wrap; gap: 14px; }
+      .content { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <div class="name">john paul talag</div>
+      <div class="nav">
+        <a href="index.html">work</a>
+        <a href="projects.html" class="active">projects</a>
+        <a href="experience.html">experience</a>
+        <a href="about.html">contact // about</a>
+        <a href="resume.html">resume</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>projects</h1>
+
+      <div class="project">
+        <h2>Framing the Mind</h2>
+        <p>
+          A randomized behavioral research project studying how “test” versus
+          “challenge” framing affects student performance and persistence.
+        </p>
+      </div>
+
+      <div class="project">
+        <h2>EV Adoption Thresholds to Reduce California CO₂ Emissions</h2>
+        <p>
+          A data-driven project using California DMV and emissions datasets to
+          estimate the level of electric vehicle adoption needed to slow statewide
+          emissions growth.
+        </p>
+      </div>
+
+      <div class="project">
+        <h2>Basketball Analytics</h2>
+        <p>
+          Analytics work supporting Division I basketball through public data,
+          efficiency trends, and lineup or shot-based insight.
+        </p>
+      </div>
+
+      <div class="project">
+        <h2>Market Research / TritonSched</h2>
+        <p>
+          Mixed-method research using surveys and user insight to understand
+          student needs, preferences, and feature priorities.
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
