@@ -1,1 +1,90 @@
-<html><body>Experience page</body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experience — John Paul Talag</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: #f5f5f5;
+      color: #111;
+      line-height: 1.5;
+    }
+    .container { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+    .sidebar { padding: 40px 24px; font-size: 15px; }
+    .name { font-weight: 500; margin-bottom: 24px; }
+    .nav { display: flex; flex-direction: column; gap: 12px; color: #666; }
+    .nav a { text-decoration: none; color: inherit; }
+    .nav a:hover { color: #111; }
+    .nav a.active { color: #111; font-weight: 500; }
+    .content { padding: 40px 60px; max-width: 860px; }
+    h1 { font-size: 22px; font-weight: 600; margin-bottom: 24px; }
+    .role { margin-bottom: 28px; }
+    .role h2 { font-size: 18px; font-weight: 500; margin-bottom: 4px; }
+    .meta { color: #666; margin-bottom: 8px; }
+    .role p { color: #222; max-width: 64ch; }
+    @media (max-width: 800px) {
+      .container { grid-template-columns: 1fr; }
+      .sidebar { display: flex; justify-content: space-between; gap: 20px; padding: 20px; }
+      .nav { flex-direction: row; flex-wrap: wrap; gap: 14px; }
+      .content { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <div class="name">john paul talag</div>
+      <div class="nav">
+        <a href="index.html">work</a>
+        <a href="projects.html">projects</a>
+        <a href="experience.html" class="active">experience</a>
+        <a href="about.html">contact // about</a>
+        <a href="resume.html">resume</a>
+      </div>
+    </div>
+
+    <div class="content">
+      <h1>experience</h1>
+
+      <div class="role">
+        <h2>Internal Audit Intern</h2>
+        <div class="meta">Realty Income</div>
+        <p>
+          Supported walkthroughs, control testing, report validation, and process
+          documentation in a public-company audit environment.
+        </p>
+      </div>
+
+      <div class="role">
+        <h2>Economics Research Lab Assistant</h2>
+        <div class="meta">UC San Diego</div>
+        <p>
+          Assisted with behavioral and experimental economics research through data
+          analysis, coordination, and structured research support.
+        </p>
+      </div>
+
+      <div class="role">
+        <h2>Student Leadership / Retention Programming</h2>
+        <div class="meta">SPACES / Kaibigang Pilipino</div>
+        <p>
+          Built and supported programming focused on retention, mentorship, student
+          development, and peer-centered community building.
+        </p>
+      </div>
+
+      <div class="role">
+        <h2>Finance & Operations Manager</h2>
+        <div class="meta">Out The Archive</div>
+        <p>
+          Managed budgeting, logistics, and operational execution for creative and
+          community-facing projects.
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
