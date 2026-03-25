@@ -27,17 +27,18 @@
 
     .sidebar {
       padding: 40px 24px;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .name {
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+      color: #111;
     }
 
     .nav {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       color: #666;
     }
 
@@ -57,33 +58,36 @@
 
     .content {
       padding: 40px 60px;
-      max-width: 720px;
+      max-width: 640px;
     }
 
     h1 {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 600;
-      margin-bottom: 32px;
-    }
-
-    .project {
       margin-bottom: 36px;
     }
 
+    .project {
+      margin-bottom: 44px;
+    }
+
     .project-title {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 600;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
+      line-height: 1.35;
     }
 
     .project p {
-      color: #222;
-      max-width: 60ch;
+      color: #3a3a3a;
+      max-width: 58ch;
+      line-height: 1.65;
+      font-size: 15px;
     }
 
     .divider {
-      border-bottom: 1px solid #ddd;
-      margin: 28px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      margin: 34px 0;
     }
 
     @media (max-width: 800px) {
@@ -106,6 +110,19 @@
 
       .content {
         padding: 20px;
+        max-width: 100%;
+      }
+
+      h1 {
+        margin-bottom: 28px;
+      }
+
+      .project {
+        margin-bottom: 36px;
+      }
+
+      .divider {
+        margin: 28px 0;
       }
     }
   </style>
@@ -114,7 +131,6 @@
 <body>
   <div class="container">
 
-    <!-- SIDEBAR -->
     <div class="sidebar">
       <div class="name">john paul talag</div>
 
@@ -127,15 +143,13 @@
       </div>
     </div>
 
-    <!-- CONTENT -->
     <div class="content">
       <h1>projects</h1>
 
       <div class="project">
         <div class="project-title">predicting credit default risk with logistic regression</div>
         <p>
-          developed a predictive model using financial and demographic data from 30,000 credit card clients to estimate default risk.
-          identified key drivers such as repayment behavior and credit limits, translating results into actionable insights for earlier risk detection and improved lending decisions.
+          built a predictive model using financial and demographic data from 30,000 credit card clients to estimate default risk. identified key drivers like repayment behavior and credit limits to improve early risk detection.
         </p>
       </div>
 
@@ -144,8 +158,7 @@
       <div class="project">
         <div class="project-title">statistical analysis of class duration and student engagement</div>
         <p>
-          designed and executed a data-driven study across 100 uc san diego classes to quantify how lecture duration impacts attendance and engagement.
-          applied t-tests and regression to isolate effects, uncovering key structural confounds in scheduling and informing course design decisions.
+          analyzed 100 uc san diego classes to measure how lecture duration impacts attendance and engagement. used t-tests and regression to identify key patterns and inform course design decisions.
         </p>
       </div>
 
@@ -154,8 +167,7 @@
       <div class="project">
         <div class="project-title">estimating ev adoption thresholds to reduce california co₂ emissions</div>
         <p>
-          developed a data-driven model using california dmv and emissions datasets to estimate the scale of ev adoption required to slow statewide co₂ growth by 2035.
-          performed data cleaning, classification, and regression analysis to translate emissions trends into policy-relevant insights.
+          built a data-driven model using california dmv and emissions data to estimate the level of ev adoption needed to slow statewide co₂ growth by 2035. translated trends into policy-relevant insights.
         </p>
       </div>
 
@@ -164,8 +176,7 @@
       <div class="project">
         <div class="project-title">applied market research project — tritonsched</div>
         <p>
-          conducted mixed-method market research using surveys, cluster analysis, and conjoint techniques to identify student scheduling pain points and quantify willingness-to-pay.
-          translated findings into strategic product recommendations focused on reliability and integrated scheduling features.
+          conducted market research using surveys, cluster analysis, and conjoint methods to identify student scheduling pain points. translated findings into product recommendations focused on reliability and usability.
         </p>
       </div>
 
@@ -174,8 +185,7 @@
       <div class="project">
         <div class="project-title">framing effects on performance: a randomized behavioral study</div>
         <p>
-          designed and conducted a randomized experiment with 170+ uc san diego students to measure how “test” versus “challenge” framing influences performance and persistence.
-          analyzed results using statistical testing and translated findings into actionable insights for educational and organizational settings.
+          ran a randomized experiment with 170+ students to measure how “test” vs “challenge” framing affects performance and persistence. analyzed results to generate insights for education and training environments.
         </p>
       </div>
 
