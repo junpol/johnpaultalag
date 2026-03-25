@@ -27,17 +27,18 @@
 
     .sidebar {
       padding: 40px 24px;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .name {
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+      color: #111;
     }
 
     .nav {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       color: #666;
     }
 
@@ -57,53 +58,51 @@
 
     .content {
       padding: 40px 60px;
-      max-width: 720px;
+      max-width: 640px;
     }
 
     h1 {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 600;
-      margin-bottom: 32px;
-    }
-
-    .section-label {
-      font-size: 22px;
-      font-weight: 600;
-      margin-bottom: 28px;
-    }
-
-    .section-subhead {
-      font-size: 18px;
-      font-weight: 600;
-      margin: 44px 0 24px;
-    }
-
-    .role {
       margin-bottom: 36px;
     }
 
+    .section-subhead {
+      font-size: 17px;
+      font-weight: 600;
+      margin: 52px 0 28px;
+      line-height: 1.35;
+    }
+
+    .role {
+      margin-bottom: 44px;
+    }
+
     .company {
-      font-size: 15px;
-      color: #111;
+      font-size: 14px;
+      color: #666;
       margin-bottom: 12px;
+      line-height: 1.4;
     }
 
     .title {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 600;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      line-height: 1.35;
+      color: #111;
     }
 
     .desc {
-      color: #222;
-      max-width: 60ch;
+      color: #3a3a3a;
+      max-width: 58ch;
+      line-height: 1.65;
       font-size: 15px;
-      line-height: 1.6;
     }
 
     .divider {
-      border-bottom: 1px solid #ddd;
-      margin: 28px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      margin: 34px 0;
     }
 
     @media (max-width: 800px) {
@@ -126,6 +125,23 @@
 
       .content {
         padding: 20px;
+        max-width: 100%;
+      }
+
+      h1 {
+        margin-bottom: 28px;
+      }
+
+      .role {
+        margin-bottom: 36px;
+      }
+
+      .divider {
+        margin: 28px 0;
+      }
+
+      .section-subhead {
+        margin: 44px 0 24px;
       }
     }
   </style>
